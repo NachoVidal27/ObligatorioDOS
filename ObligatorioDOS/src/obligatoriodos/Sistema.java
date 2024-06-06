@@ -1,4 +1,5 @@
 package obligatoriodos;
+
 import javax.swing.*;
 import modelos.*;
 import java.util.ArrayList;
@@ -12,12 +13,12 @@ public class Sistema {
 
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
-       // RegistrarPropietario vent = new RegistrarPropietario(sistema);
-        RegistrarCapataz vent = new RegistrarCapataz();
-        vent.setVisible(true);        
+        // RegistrarPropietario vent = new RegistrarPropietario(sistema);
+        RegistrarPropietario vent = new RegistrarPropietario(sistema);
+        vent.setVisible(true);
     }
 
-    //metodos de propietario
+    // metodos de propietario
     public void setPropietario(Propietario propietario) {
         this.propietarios.add(propietario);
     }
@@ -37,7 +38,7 @@ public class Sistema {
         return esValido;
     }
 
-    //metodos rubros
+    // metodos rubros
     public void setRubro(Rubro rurbro) {
         this.rubros.add(rurbro);
     }
@@ -46,7 +47,7 @@ public class Sistema {
         return this.rubros;
     }
 
-    //metodos obras
+    // metodos obras
     public void setObra(Obra obra) {
         this.obras.add(obra);
     }
