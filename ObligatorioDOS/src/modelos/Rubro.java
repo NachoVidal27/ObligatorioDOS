@@ -4,33 +4,52 @@
  */
 package modelos;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  *
  * @author igjov
  */
-public class Rubro {
-  private String nombre; // unique
-  private String descripcion;
+public class Rubro implements Serializable{
 
-  public Rubro(String nombre, String descripcion) {
-    this.nombre = nombre;
-    this.descripcion = descripcion;
-  }
+    private String nombre; // unique
+    private String descripcion;
+    private int costo;
 
-  public String getNombre() {
-    return this.nombre;
-  }
+    public Rubro(String nombre, String descripcion, int costo) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.costo = costo;
+    }
 
-  public String getDescripcion() {
-    return this.descripcion;
-  }
+    public String getNombre() {
+        return this.nombre;
+    }
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
+    public int getCosto() {
+        return costo;
+    }
 
-  public void setDescripcion(String descripcion) {
-    this.descripcion = descripcion;
-  }
+    public String getDescripcion() {
+        return this.descripcion;
+    }
 
+    public void setCosto(int costo) {
+        this.costo = costo;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    @Override
+    public String toString() {
+        String strRet = this.getNombre() + ": " + this.getDescripcion() + "\n";
+        return strRet;
+    }
 }

@@ -1,6 +1,8 @@
 package obligatoriodos;
 
-import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import modelos.*;
 import java.util.ArrayList;
 
@@ -13,14 +15,43 @@ public class Sistema {
 
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("Rubros"));
+            Rubro Pintura = (Rubro) in.readObject();
+            sistema.setRubro(Pintura);
+            Rubro Sanitaria = (Rubro) in.readObject();
+            sistema.setRubro(Sanitaria);
+            Rubro Eléctrica = (Rubro) in.readObject();
+            sistema.setRubro(Eléctrica);
+            Rubro Carpintería = (Rubro) in.readObject();
+            sistema.setRubro(Carpintería);
+            Rubro Albañilería = (Rubro) in.readObject();
+            sistema.setRubro(Albañilería);
+            Rubro Pisos = (Rubro) in.readObject();
+            sistema.setRubro(Pisos);
+            Rubro CambiodeVentanas = (Rubro) in.readObject();
+            sistema.setRubro(CambiodeVentanas);
+            Rubro Baño = (Rubro) in.readObject();
+            sistema.setRubro(Baño);
+            Rubro Cocina = (Rubro) in.readObject();
+            sistema.setRubro(Cocina);
+            Rubro Aislamiento = (Rubro) in.readObject();
+            sistema.setRubro(Aislamiento);
+            in.close();
+            System.out.println(sistema.getRubros().toString());
+        } catch (ClassNotFoundException e) {
+            System.out.println(e);
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+
         // RegistrarPropietario vent = new RegistrarPropietario(sistema);
-        // RegistrarPropietario vent = new RegistrarPropietario(sistema);
-        RegistrarCapataz vent2 = new RegistrarCapataz(sistema);
-        vent2.setVisible(true);
-        // vent.setVisible(true);
+        //RegistrarPropietario vent = new RegistrarPropietario(sistema);
+        RegistrarRubro vent = new RegistrarRubro(sistema);
+        vent.setVisible(true);
     }
 
-    // metodos de propietario
+    //metodos de propietario
     public void setPropietario(Propietario propietario) {
         this.propietarios.add(propietario);
     }
@@ -40,16 +71,16 @@ public class Sistema {
         return esValido;
     }
 
-    // metodos rubros
-    public void setRubro(Rubro rurbro) {
-        this.rubros.add(rurbro);
+    //metodos rubros
+    public void setRubro(Rubro rubro) {
+        this.rubros.add(rubro);
     }
 
-    public ArrayList<Rubro> getRubrors() {
+    public ArrayList<Rubro> getRubros() {
         return this.rubros;
     }
 
-    // metodos obras
+    //metodos obras
     public void setObra(Obra obra) {
         this.obras.add(obra);
     }

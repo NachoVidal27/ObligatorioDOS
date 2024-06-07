@@ -3,16 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package obligatoriodos;
+
 import javax.swing.*;
+import modelos.Rubro;
 
 public class RegistrarRubro extends javax.swing.JFrame {
 
     /**
      * Creates new form RegistrarRubro
      */
-    public RegistrarRubro() {
-     
+    private Sistema sistema;
+
+    public RegistrarRubro(Sistema sistema) {
+        this.sistema = sistema;
         initComponents();
+        cargarRubrosALista();
+    }
+
+    private void cargarRubrosALista() {
+        String empty[] = {""};
+        listRubrosRegistrados.setListData(empty);
+        String[] arrayRubros = new String[sistema.getRubros().size()];
+        for (int i = 0; i < sistema.getRubros().size(); i++) {
+            arrayRubros[i] = sistema.getRubros().get(i).getNombre().toString();
+        }
+        listRubrosRegistrados.setListData(arrayRubros);
     }
 
     /**
@@ -93,8 +108,27 @@ public class RegistrarRubro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarRubroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarRubroMouseClicked
-   
+        String nombre = txtNombreRubro.getText();
+        String descripcion = txtAreaDescripcionRubro.getText();
+        if (nombre.isEmpty() || descripcion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.");
+            return; // Salir del método si algún campo está vacío
+        }
+        Rubro nuevoRubro = new Rubro(nombre, descripcion, 0);
+        for (int i = 0; i < sistema.getRubros().size(); i++) {
+            if (nuevoRubro.getNombre().equals(sistema.getRubros().get(i).getNombre().toString()) && !descripcion.isEmpty()) {
+                sistema.getRubros().get(i).setDescripcion(descripcion);
+                JOptionPane.showMessageDialog(this, "El rubro ingresado ya existe, la descripcion fue modificada");
+                txtNombreRubro.setText("");
+                txtAreaDescripcionRubro.setText("");
+                return; // Si el nombre del rubro ya esta en la lista modifica solo la descripcion y sale del metodo
+            }
+        }
+        sistema.setRubro(nuevoRubro);
+        JOptionPane.showMessageDialog(this, "Nuevo rubro agregado.");
         txtNombreRubro.setText("");
+        txtAreaDescripcionRubro.setText("");
+        cargarRubrosALista();
     }//GEN-LAST:event_btnRegistrarRubroMouseClicked
 
     /**
