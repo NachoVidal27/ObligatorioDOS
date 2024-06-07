@@ -14,8 +14,10 @@ public class Sistema {
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
         // RegistrarPropietario vent = new RegistrarPropietario(sistema);
-        RegistrarPropietario vent = new RegistrarPropietario(sistema);
-        vent.setVisible(true);
+        // RegistrarPropietario vent = new RegistrarPropietario(sistema);
+        RegistrarCapataz vent2 = new RegistrarCapataz(sistema);
+        vent2.setVisible(true);
+        // vent.setVisible(true);
     }
 
     // metodos de propietario
