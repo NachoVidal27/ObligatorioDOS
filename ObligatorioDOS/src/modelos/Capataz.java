@@ -1,6 +1,5 @@
 package modelos;
 
-
 public class Capataz {
   private String nombre;
   private String cedula;
@@ -43,6 +42,12 @@ public class Capataz {
 
   public void setAnioDeIngreso(int anio) {
     this.anioDeIngreso = anio;
+  }
+
+  @Override
+  public String toString() {
+    String strRet = "el nombre del capataz es " + this.getNombre();
+    return strRet;
   }
 
 }

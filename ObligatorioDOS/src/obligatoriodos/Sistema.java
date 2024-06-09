@@ -3,8 +3,8 @@ package obligatoriodos;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import modelos.*;
 import java.util.ArrayList;
+import modelos.*;
 
 public class Sistema {
 
@@ -46,12 +46,13 @@ public class Sistema {
         }
 
         // RegistrarPropietario vent = new RegistrarPropietario(sistema);
-        //RegistrarPropietario vent = new RegistrarPropietario(sistema);
-        RegistrarRubro vent = new RegistrarRubro(sistema);
+        // RegistrarPropietario vent = new RegistrarPropietario(sistema);
+        // RegistrarRubro vent = new RegistrarRubro(sistema);
+        RegistrarCapataz vent = new RegistrarCapataz(sistema);
         vent.setVisible(true);
     }
 
-    //metodos de propietario
+    // metodos de propietario
     public void setPropietario(Propietario propietario) {
         this.propietarios.add(propietario);
     }
@@ -71,7 +72,7 @@ public class Sistema {
         return esValido;
     }
 
-    //metodos rubros
+    // metodos rubros
     public void setRubro(Rubro rubro) {
         this.rubros.add(rubro);
     }
@@ -80,7 +81,7 @@ public class Sistema {
         return this.rubros;
     }
 
-    //metodos obras
+    // metodos obras
     public void setObra(Obra obra) {
         this.obras.add(obra);
     }
