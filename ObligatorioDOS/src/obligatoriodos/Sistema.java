@@ -45,11 +45,7 @@ public class Sistema {
             System.out.println(e.toString());
         }
 
-        // RegistrarPropietario vent = new RegistrarPropietario(sistema);
-        // RegistrarPropietario vent = new RegistrarPropietario(sistema);
-        // RegistrarRubro vent = new RegistrarRubro(sistema);
-        RegistrarCapataz vent = new RegistrarCapataz(sistema);
-        vent.setVisible(true);
+        // vent.setVisible(true);
     }
 
     // metodos de propietario
