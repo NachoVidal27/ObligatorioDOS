@@ -4,6 +4,8 @@
  */
 package modelos;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author igjov
@@ -16,16 +18,26 @@ public class Obra {
     private int mesDeComienzo;
     private int anioDeComienzo;
     private int presupuestoTotal;
-    private String numeroDePermiso;
+    private int numeroDePermiso;
+    private ArrayList<Gasto> gastos = new ArrayList<>();
 
     public Obra(Propietario propietario, Capataz capataz, String direccion, int mesDeComienzo, int anioDeComienzo,
-            int presupuestoTotal) {
+            int presupuestoTotal, int numeroDePermiso) {
         this.propietario = propietario;
         this.capataz = capataz;
         this.direccion = direccion;
         this.mesDeComienzo = mesDeComienzo;
         this.anioDeComienzo = anioDeComienzo;
         this.presupuestoTotal = presupuestoTotal;
+        this.numeroDePermiso = numeroDePermiso;
+    }
+
+    public void setGastos(Gasto gastos) {
+        this.gastos.add(gastos);
+    }
+
+    public ArrayList<Gasto> getGastos() {
+        return this.gastos;
     }
 
     public Propietario getPropietario() {
@@ -52,7 +64,7 @@ public class Obra {
         return this.presupuestoTotal;
     }
 
-    public String getNumeroDePermiso() {
+    public int getNumeroDePermiso() {
         return this.numeroDePermiso;
     }
 
@@ -80,7 +92,7 @@ public class Obra {
         this.presupuestoTotal = presupuestoTotal;
     }
 
-    public void setNumeroDePermiso(String numero) {
+    public void setNumeroDePermiso(int numero) {
         this.numeroDePermiso = numero;
     }
 

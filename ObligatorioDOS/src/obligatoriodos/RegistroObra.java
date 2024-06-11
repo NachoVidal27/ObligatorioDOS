@@ -4,13 +4,25 @@
  */
 package obligatoriodos;
 
+import java.util.ArrayList;
+import modelos.*;
+
 public class RegistroObra extends javax.swing.JFrame {
 
     /**
      * Creates new form RegistroObra
      */
-    public RegistroObra() {
+    Sistema sistema;
+
+    private ArrayList<Capataz> listaCapataces;
+    private ArrayList<Propietario> listaPropietarios;
+
+    //
+    public RegistroObra(Sistema sistema) {
+        this.sistema = sistema;
         initComponents();
+        cargarDatosListas(sistema);
+        actualizarModelos();
     }
 
     /**
@@ -149,10 +161,23 @@ public class RegistroObra extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //cargamos las listas con los datos del sistema de propietarios y capataces
+    private void cargarDatosListas(Sistema sistema) {
+        this.listaCapataces = sistema.getCapataces();
+        this.listaPropietarios = sistema.getPropietarios();
+    }
+
+    private void actualizarModelos() {
+        jList1.setListData(listaCapataces.toArray(new String[0]));
+        jList2.setListData(listaPropietarios.toArray(new String[0]));
+
+    }
+
+    //
     /**
-     * @param args the command line arguments
+     * @param args
      */
-    public static void main(String args[]) {
+     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
         // (optional) ">
@@ -172,18 +197,9 @@ public class RegistroObra extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                 | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(RegistroObra.class.getName()).log(java.util.logging.Level.SEVERE, null,
-                    ex);
+              ex);
         }
-        // </editor-fold>
-
-        // </editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new RegistroObra().setVisible(true);
-        });
-    }
-
+     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

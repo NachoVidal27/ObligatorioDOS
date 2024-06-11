@@ -38,14 +38,21 @@ public class Sistema {
             Rubro Aislamiento = (Rubro) in.readObject();
             sistema.setRubro(Aislamiento);
             in.close();
-            System.out.println(sistema.getRubros().toString());
         } catch (ClassNotFoundException e) {
             System.out.println(e);
         } catch (IOException e) {
             System.out.println(e.toString());
         }
-
-        // vent.setVisible(true);
+        /*
+            Usar registrar gasto
+            Obra Eléctrica = new Obra(null, null, "a", 0, 0, 0, 524);
+            sistema.setObra(Eléctrica);
+            Obra Eléctrica2 = new Obra(null, null, "b", 0, 0, 0, 54);
+            sistema.setObra(Eléctrica2);
+            RegistroGasto vent = new RegistroGasto(sistema);
+            vent.setVisible(true);
+        
+         */
     }
 
     // metodos de propietario
