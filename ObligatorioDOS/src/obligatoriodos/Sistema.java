@@ -1,8 +1,11 @@
 package obligatoriodos;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import modelos.*;
 
@@ -38,28 +41,33 @@ public class Sistema {
             Rubro Aislamiento = (Rubro) in.readObject();
             sistema.setRubro(Aislamiento);
             in.close();
-            Obra Eléctrica2 = new Obra(null, null, "a", 0, 0, 0, 524);
+            Propietario prop = new Propietario("juan", "123", "abc", 123);
+            Capataz cap = new Capataz("pedro", "123", "abc");
+            Obra Eléctrica2 = new Obra(prop, cap, "obra 1", 0, 0, 0, 524);
             sistema.setObra(Eléctrica2);
-            Obra Eléctrica3 = new Obra(null, null, "b", 0, 0, 0, 54);
+            Eléctrica2.setRubrosNoPresupuestados(Aislamiento);
+            Cocina.setPresupuesto(1000);
+            Eléctrica2.setRubrosPresupuestados(Cocina);
+            Obra Eléctrica3 = new Obra(null, null, "obra 2", 0, 0, 0, 54);
             sistema.setObra(Eléctrica3);
-            Gasto gasto = new Gasto(1200, 6, 2024, "desc", 1, Aislamiento, 3);
+            Gasto gasto = new Gasto(1200, 6, 2024, "desc", 1, Aislamiento, false);
             Eléctrica2.setGastos(gasto);
-            Gasto gasto2 = new Gasto(1800, 6, 2024, "desc2", 2, Aislamiento, 3);
+            Gasto gasto5 = new Gasto(1200, 6, 2024, "desc", 3, Cocina, true);
+            Eléctrica2.setGastos(gasto5);
+            Gasto gasto2 = new Gasto(1800, 6, 2024, "desc2", 2, Aislamiento, false);
             Eléctrica2.setGastos(gasto2);
-            Gasto gasto3 = new Gasto(600, 6, 2024, "desc3", 1, Aislamiento, 3);
+            Gasto gasto3 = new Gasto(600, 6, 2024, "desc3", 1, Aislamiento, false);
             Eléctrica3.setGastos(gasto3);
-            Gasto gasto4 = new Gasto(600, 6, 2024, "desc3", 2, Aislamiento, 3);
+            Gasto gasto4 = new Gasto(600, 6, 2024, "desc3", 2, Aislamiento, false);
             Eléctrica3.setGastos(gasto4);
         } catch (ClassNotFoundException e) {
             System.out.println(e);
         } catch (IOException e) {
             System.out.println(e.toString());
         }
-        /*
-            //Usar registrar gasto
-         */
-
-        RegistrarPago vent = new RegistrarPago(sistema);
+        sistema.generarCapataces();
+        sistema.generarPropietarios();
+        RegistroObra vent = new RegistroObra(sistema);
         vent.setVisible(true);
 
     }
@@ -67,6 +75,17 @@ public class Sistema {
     // metodos de propietario
     public void setPropietario(Propietario propietario) {
         this.propietarios.add(propietario);
+    }
+
+    public void generarPropietarios() {
+        this.propietarios.add(new Propietario("PropNacho", "49007203", "Rivera 5013", Integer.parseInt("091459408")));
+        this.propietarios
+                .add(new Propietario("PropNicolas", "49323003", "Amazonas 1340", Integer.parseInt("09144448")));
+    }
+
+    public void generarCapataces() {
+        this.capataces.add(new Capataz("CapatazNacho", "49007203", "Av italia 5012"));
+        this.capataces.add(new Capataz("CapatazNicolas", "49037203", "Michigan 2980"));
     }
 
     public ArrayList<Propietario> getPropietarios() {

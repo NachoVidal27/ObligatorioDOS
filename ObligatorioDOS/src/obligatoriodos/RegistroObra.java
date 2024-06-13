@@ -4,10 +4,21 @@
  */
 package obligatoriodos;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.JButton;
+
 import modelos.*;
 
 public class RegistroObra extends javax.swing.JFrame {
+
+    private static final Rubro Aislamiento = null;
 
     /**
      * Creates new form RegistroObra
@@ -16,6 +27,8 @@ public class RegistroObra extends javax.swing.JFrame {
 
     private ArrayList<Capataz> listaCapataces;
     private ArrayList<Propietario> listaPropietarios;
+    private ArrayList<Rubro> listaRubros;
+    int presupuestoTotal = 0;
 
     //
     public RegistroObra(Sistema sistema) {
@@ -23,6 +36,13 @@ public class RegistroObra extends javax.swing.JFrame {
         initComponents();
         cargarDatosListas(sistema);
         actualizarModelos();
+        actualizarPanelRubros();
+        jButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                crearObra(); // Llama al método crearObra cuando se hace clic en jButton1
+            }
+        });
     }
 
     /**
@@ -32,7 +52,8 @@ public class RegistroObra extends javax.swing.JFrame {
      */
     // @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -80,16 +101,8 @@ public class RegistroObra extends javax.swing.JFrame {
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-
-            @Override
-            public int getSize() {
-                return strings.length;
-            }
-
-            @Override
-            public String getElementAt(int i) {
-                return strings[i];
-            }
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(jList1);
 
@@ -98,23 +111,15 @@ public class RegistroObra extends javax.swing.JFrame {
 
         jList2.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-
-            @Override
-            public int getSize() {
-                return strings.length;
-            }
-
-            @Override
-            public String getElementAt(int i) {
-                return strings[i];
-            }
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane2.setViewportView(jList2);
 
         jPanel1.add(jScrollPane2);
         jScrollPane2.setBounds(40, 100, 170, 146);
 
-        panelRubros.setLayout(new java.awt.GridLayout());
+        panelRubros.setLayout(new java.awt.GridLayout(1, 0));
         jPanel1.add(panelRubros);
         panelRubros.setBounds(40, 260, 370, 170);
 
@@ -122,20 +127,16 @@ public class RegistroObra extends javax.swing.JFrame {
         jLabel3.setText("0");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(580, 290, 90, 16);
-
-        jTextField1.setText("jTextField1");
         jPanel1.add(jTextField1);
         jTextField1.setBounds(460, 100, 90, 22);
 
         jLabel4.setText("Permiso nro:");
         jPanel1.add(jLabel4);
         jLabel4.setBounds(460, 80, 100, 16);
-
-        jTextField2.setText("jTextField2");
         jPanel1.add(jTextField2);
         jTextField2.setBounds(460, 160, 260, 22);
 
-        jLabel6.setText("Permiso nro:");
+        jLabel6.setText("Direccion");
         jPanel1.add(jLabel6);
         jLabel6.setBounds(460, 140, 100, 16);
         jPanel1.add(jSpinner1);
@@ -161,15 +162,100 @@ public class RegistroObra extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //cargamos las listas con los datos del sistema de propietarios y capataces
+    // cargamos las listas con los datos del sistema de propietarios y capataces
     private void cargarDatosListas(Sistema sistema) {
         this.listaCapataces = sistema.getCapataces();
         this.listaPropietarios = sistema.getPropietarios();
+        this.listaRubros = sistema.getRubros();
     }
 
     private void actualizarModelos() {
-        jList1.setListData(listaCapataces.toArray(new String[0]));
-        jList2.setListData(listaPropietarios.toArray(new String[0]));
+        String[] capatacesArray = listaCapataces.stream()
+                .map(Capataz::toString)
+                .toArray(String[]::new);
+        String[] propietariosArray = listaPropietarios.stream()
+                .map(Propietario::toString)
+                .toArray(String[]::new);
+        jList1.setListData(capatacesArray);
+        jList2.setListData(propietariosArray);
+    }
+
+    //
+    private void actualizarPanelRubros() {
+        panelRubros.removeAll();
+        panelRubros.setLayout(new GridLayout(2, 2));
+        for (Rubro rubro : listaRubros) {
+            String rubroTxt = rubro.getNombre() + " " + rubro.getPresupuesto();
+            // String rubroTxt = rubro.getNombre() + " " + rubro.getCosto();
+
+            JButton nuevo = new JButton();
+            nuevo.setMargin(new Insets(0, 0, 0, 0));
+            nuevo.setBackground(Color.BLACK);
+            nuevo.setForeground(Color.WHITE);
+            nuevo.setText(rubroTxt);
+            nuevo.addActionListener(new RubroListener());
+            panelRubros.add(nuevo);
+        }
+        panelRubros.revalidate();
+        panelRubros.repaint();
+    }
+
+    private class RubroListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton cual = (JButton) e.getSource();
+            cual.setBackground(Color.BLUE);
+        }
+    }
+
+    public void crearObra() {
+        // Capturar los valores de los componentes y crear un objeto Obra
+        String permiso = jTextField1.getText();
+        String direccion = jTextField2.getText();
+        int anio = (int) jSpinner1.getValue();
+        int mes = (int) jSpinner2.getValue();
+
+        // Capturar el propietario seleccionado
+        Propietario propietarioSeleccionado = listaPropietarios.get(jList2.getSelectedIndex());
+
+        // Capturar el capataz seleccionado
+        Capataz capatazSeleccionado = listaCapataces.get(jList1.getSelectedIndex());
+
+        System.out.println("el permiso tiene el valor " + permiso);
+        System.out.println("la direccion tiene el valor " + direccion);
+        System.out.println("el mes tiene el valor " + mes);
+        System.out.println("el año tiene el valor " + anio);
+        System.out.println("el propietario tiene el valor " + propietarioSeleccionado.getNombre());
+        System.out.println("el capataz tiene el valor " + capatazSeleccionado.getNombre());
+
+        // Crear un objeto Obra con los valores capturados
+        Obra nuevaObra = new Obra(propietarioSeleccionado, capatazSeleccionado, direccion, mes, anio, 0,
+                Integer.parseInt(permiso));
+
+        // importante recuperar
+        // Capturar los rubros seleccionados
+        for (Component componente : panelRubros.getComponents()) {
+            if (componente instanceof JButton) {
+                JButton botonRubro = (JButton) componente;
+                if (botonRubro.getBackground().equals(Color.BLUE)) { // Suponiendo que el color indica la seleccion
+                    // Obtener el texto del botón y parsear el nombre y costo del rubro
+                    String[] partes = botonRubro.getText().split(" ");
+                    String nombreRubro = partes[0];
+                    double costoRubro = Double.parseDouble(partes[1]);
+                    presupuestoTotal += costoRubro;
+                    int cantidad = 2;
+                    // Crear un objeto Gasto con el nombre y costo del rubro y añadirlo a la obra
+                    Gasto gasto = new Gasto((int) costoRubro, mes, anio, "descripción", cantidad, Aislamiento, false);
+                    System.out.println(gasto);
+                    nuevaObra.setGastos(gasto);
+                }
+            }
+        }
+        nuevaObra.setPresupuestoTotal(presupuestoTotal);
+        sistema.setObra(nuevaObra);
+        System.out.println("el presupuesto total da " + nuevaObra.getPresupuestoTotal());
+        System.out.println(sistema.getObras());
 
     }
 
@@ -177,16 +263,7 @@ public class RegistroObra extends javax.swing.JFrame {
     /**
      * @param args
      */
-     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel.
-         * For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
+    public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -197,9 +274,17 @@ public class RegistroObra extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                 | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(RegistroObra.class.getName()).log(java.util.logging.Level.SEVERE, null,
-              ex);
+                    ex);
         }
-     }
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Sistema sistema = new Sistema(); // Assumes you have a default constructor
+                new RegistroObra(sistema).setVisible(true);
+            }
+        });
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

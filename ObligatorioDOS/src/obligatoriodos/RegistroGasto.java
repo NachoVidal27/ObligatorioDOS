@@ -199,7 +199,7 @@ public class RegistroGasto extends javax.swing.JFrame {
                 int monto = parseInt(txtMonto.getText());
                 int mes = (Integer) spnMes.getValue();
                 int anio = (Integer) spnAnio.getValue();
-                Gasto gasto = new Gasto(monto, mes, anio, txtAreaDescripcion.getText(), sistema.getObras().get(i).getGastos().size() + 1, devolverRubroPorNombre(listRubrosRegistrados.getSelectedValue()), 3);
+                Gasto gasto = new Gasto(monto, mes, anio, txtAreaDescripcion.getText(), sistema.getObras().get(i).getGastos().size() + 1, devolverRubroPorNombre(listRubrosRegistrados.getSelectedValue()), false);
                 sistema.getObras().get(i).setGastos(gasto);
                 JOptionPane.showMessageDialog(this, "Gasto registrado a la obra con nro de permiso " + sistema.getObras().get(i).getNumeroDePermiso() + "\nNumero de gasto para esta obra: " + gasto.getNumeroDeGasto());
                 txtMonto.setText("");

@@ -41,7 +41,7 @@ public class RegistrarPago extends javax.swing.JFrame {
         listGastosImpagos.setListData(empty);
         String[] arrayGastos = new String[obra.getGastos().size()];
         for (int i = 0; i < obra.getGastos().size(); i++) {
-            if (obra.getGastos().get(i).getEstado() == 3 || obra.getGastos().get(i).getEstado() == 1) {
+            if (obra.getGastos().get(i).getReintegrado() == false) {
                 arrayGastos[i] = String.valueOf(obra.getGastos().get(i).getMonto() + " - Nro. " + obra.getGastos().get(i).getNumeroDeGasto() + " - " + obra.getGastos().get(i).getDescripcion());
             }
         }
@@ -126,23 +126,23 @@ public class RegistrarPago extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarPagoMouseClicked
+        if (listObrasRegistradas.getSelectedValue() == null || listGastosImpagos.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una obra y el gasto a pagar.");
+            return; // Salir del método si algún campo está vacío
+        }
         for (int i = 0; i < sistema.getObras().size(); i++) {
             if (parseInt(listObrasRegistradas.getSelectedValue().split(",", 2)[0]) == (sistema.getObras().get(i).getNumeroDePermiso())) {
                 for (int j = 0; j < sistema.getObras().get(i).getGastos().size(); j++) {
-                    try {
-                        if (sistema.getObras().get(i).getGastos().get(j).getNumeroDeGasto() == parseInt(listGastosImpagos.getSelectedValue().split("-", 3)[1].substring(6, 7)) && (sistema.getObras().get(i).getGastos().get(j).getEstado() == 1 || sistema.getObras().get(i).getGastos().get(j).getEstado() == 3)) {
-                            sistema.getObras().get(i).getGastos().get(j).setEstado(4);
-                            System.out.println("se pago el gasto");
-                        }
-                    } catch (NullPointerException e) {
-                        System.out.println("error");
+                    if (sistema.getObras().get(i).getGastos().get(j).getNumeroDeGasto() == parseInt(listGastosImpagos.getSelectedValue().split("-", 3)[1].substring(6, 7)) && (sistema.getObras().get(i).getGastos().get(j).getReintegrado() == false)) {
+                        sistema.getObras().get(i).getGastos().get(j).setReintegrado(true);
+                        JOptionPane.showMessageDialog(this, "Pago registrado a la obra con nro de permiso " + sistema.getObras().get(i).getNumeroDePermiso());
                     }
                 }
             }
         }
-        for (int i = 0; i < sistema.getObras().size(); i++) {
-            cargarGastosALista(sistema.getObras().get(i));
-        }
+        String empty[] = {""};
+        listGastosImpagos.setListData(empty);
+        listObrasRegistradas.setSelectedValue(null, rootPaneCheckingEnabled);
     }//GEN-LAST:event_btnRegistrarPagoMouseClicked
 
     private void listObrasRegistradasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listObrasRegistradasMouseClicked

@@ -12,23 +12,16 @@ public class Gasto {
     private String descripcion;
     private int numeroDeGasto;
     private Rubro rubro;
-    private int estado;
+    private boolean reintegrado;
 
-    /*
-        1- Gasto de un rubro que no estaba en el presupuesto y el gasto no se pagó
-        2- Gasto de un rubro que no estaba en el presupuesto y el gasto se pagó
-        3- Gasto de un rubro que estaba en el presupuesto y el gasto no se pagó
-        4- Gasto de un rubro que estaba en el presupuesto y el gasto se pagó
-     */
-
-    public Gasto(int monto, int mes, int anio, String descripcion, int numeroDeGasto, Rubro rubro, int estado) {
+    public Gasto(int monto, int mes, int anio, String descripcion, int numeroDeGasto, Rubro rubro, boolean reintegrado) {
         this.monto = monto;
         this.mes = mes;
         this.anio = anio;
         this.descripcion = descripcion;
         this.numeroDeGasto = numeroDeGasto;
         this.rubro = rubro;
-        this.estado = estado;
+        this.reintegrado = reintegrado;
     }
 
     public void setRubro(Rubro rubro) {
@@ -79,17 +72,17 @@ public class Gasto {
         this.numeroDeGasto = numeroDeGasto;
     }
 
-    public int getEstado() {
-        return estado;
+    public boolean getReintegrado() {
+        return reintegrado;
     }
 
-    public void setEstado(int estado) {
-        this.estado = estado;
+    public void setReintegrado(boolean estado) {
+        this.reintegrado = reintegrado;
     }
 
     @Override
     public String toString() {
-        String strRet = "Monto: " + this.getMonto() + ", \nMes: " + this.getMes() + ", \nAño: " + this.getAnio() + ", \nDescripcion: " + this.getDescripcion() + ", \nNro gasto: " + this.getNumeroDeGasto() + ", \nRubro: " + this.getRubro().getNombre() + "\nEstado: " + this.getEstado() + "\n";
+        String strRet = "Monto: " + this.getMonto() + ", \nMes: " + this.getMes() + ", \nAño: " + this.getAnio() + ", \nDescripcion: " + this.getDescripcion() + ", \nNro gasto: " + this.getNumeroDeGasto() + ", \nRubro: " + this.getRubro() + "\nReintegrado: " + this.getReintegrado() + "\n";
         return strRet;
     }
 }

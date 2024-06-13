@@ -15,28 +15,28 @@ public class Rubro implements Serializable{
 
     private String nombre; // unique
     private String descripcion;
-    private int costo;
+    private int presupuesto; //indica el presupuesto alocado a los gastos de este rubro
 
-    public Rubro(String nombre, String descripcion, int costo) {
+    public Rubro(String nombre, String descripcion, int presupuesto) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.costo = costo;
+        this.presupuesto = presupuesto;
     }
 
     public String getNombre() {
         return this.nombre;
     }
 
-    public int getCosto() {
-        return costo;
+    public int getPresupuesto() {
+        return presupuesto;
     }
 
     public String getDescripcion() {
         return this.descripcion;
     }
 
-    public void setCosto(int costo) {
-        this.costo = costo;
+    public void setPresupuesto(int presupuesto) {
+        this.presupuesto = presupuesto;
     }
 
     public void setNombre(String nombre) {

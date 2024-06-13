@@ -9,54 +9,54 @@ package modelos;
  * @author igjov
  */
 public class Propietario {
-  private String nombre;
-  private String cedula; // tiene que ser unica
-  private String direccion;
-  private int celular;
 
-  public Propietario(String nombre, String cedula, String direccion, int celular) {
-    this.nombre = nombre;
-    this.cedula = cedula;
-    this.direccion = direccion;
-    this.celular = celular;
-  }
+    private String nombre;
+    private String cedula; // tiene que ser unica
+    private String direccion;
+    private int celular;
 
-  public String getNombre() {
-    return nombre;
-  }
+    public Propietario(String nombre, String cedula, String direccion, int celular) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.direccion = direccion;
+        this.celular = celular;
+    }
 
-  public String getCedula() {
-    return cedula;
-  }
+    public String getNombre() {
+        return nombre;
+    }
 
-  public String getDireccion() {
-    return direccion;
-  }
+    public String getCedula() {
+        return cedula;
+    }
 
-  public int getCelular() {
-    return celular;
-  }
+    public String getDireccion() {
+        return direccion;
+    }
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
-  }
+    public int getCelular() {
+        return celular;
+    }
 
-  public void setCedula(String cedula) {
-    this.cedula = cedula;
-  }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-  public void setDireccion(String direccion) {
-    this.direccion = direccion;
-  }
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
 
-  public void setCelular(int celular) {
-    this.celular = celular;
-  }
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-  @Override
-  public String toString() {
-    String strRet = "el nombre del propietario es " + this.getNombre() + " su cedula " + this.getCedula()
-        + " su direccion " + this.getDireccion() + " y su numero de telefono " + this.getCelular();
-    return strRet;
-  }
+    public void setCelular(int celular) {
+        this.celular = celular;
+    }
+
+    @Override
+    public String toString() {
+        String strRet = this.getNombre() + " (" + this.getCedula() + ")";
+        return strRet;
+    }
 }
