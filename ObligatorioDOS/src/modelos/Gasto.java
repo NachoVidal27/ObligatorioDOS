@@ -12,14 +12,23 @@ public class Gasto {
     private String descripcion;
     private int numeroDeGasto;
     private Rubro rubro;
+    private int estado;
 
-    public Gasto(int monto, int mes, int anio, String descripcion, int numeroDeGasto, Rubro rubro) {
+    /*
+        1- Gasto de un rubro que no estaba en el presupuesto y el gasto no se pagó
+        2- Gasto de un rubro que no estaba en el presupuesto y el gasto se pagó
+        3- Gasto de un rubro que estaba en el presupuesto y el gasto no se pagó
+        4- Gasto de un rubro que estaba en el presupuesto y el gasto se pagó
+     */
+
+    public Gasto(int monto, int mes, int anio, String descripcion, int numeroDeGasto, Rubro rubro, int estado) {
         this.monto = monto;
         this.mes = mes;
         this.anio = anio;
         this.descripcion = descripcion;
         this.numeroDeGasto = numeroDeGasto;
         this.rubro = rubro;
+        this.estado = estado;
     }
 
     public void setRubro(Rubro rubro) {
@@ -70,9 +79,17 @@ public class Gasto {
         this.numeroDeGasto = numeroDeGasto;
     }
 
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        String strRet = "Monto: " + this.getMonto() + ", \nMes: " + this.getMes() + ", \nAño: " + this.getAnio() + ", \nDescripcion: " + this.getDescripcion() + ", \nNro gasto: " + this.getNumeroDeGasto() + ", \nRubro: " + this.getRubro().getNombre() + "\n";
+        String strRet = "Monto: " + this.getMonto() + ", \nMes: " + this.getMes() + ", \nAño: " + this.getAnio() + ", \nDescripcion: " + this.getDescripcion() + ", \nNro gasto: " + this.getNumeroDeGasto() + ", \nRubro: " + this.getRubro().getNombre() + "\nEstado: " + this.getEstado() + "\n";
         return strRet;
     }
 }

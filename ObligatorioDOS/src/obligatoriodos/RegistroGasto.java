@@ -113,7 +113,7 @@ public class RegistroGasto extends javax.swing.JFrame {
         jPanel1.add(jLabel5);
         jLabel5.setBounds(10, 10, 240, 40);
         jPanel1.add(jSeparator1);
-        jSeparator1.setBounds(0, 60, 670, 10);
+        jSeparator1.setBounds(0, 60, 690, 10);
 
         lblRubrosRegistrados.setText("Obras registradas:");
         jPanel1.add(lblRubrosRegistrados);
@@ -199,7 +199,7 @@ public class RegistroGasto extends javax.swing.JFrame {
                 int monto = parseInt(txtMonto.getText());
                 int mes = (Integer) spnMes.getValue();
                 int anio = (Integer) spnAnio.getValue();
-                Gasto gasto = new Gasto(monto, mes, anio, txtAreaDescripcion.getText(), sistema.getObras().get(i).getGastos().size() + 1, devolverRubroPorNombre(listRubrosRegistrados.getSelectedValue()));
+                Gasto gasto = new Gasto(monto, mes, anio, txtAreaDescripcion.getText(), sistema.getObras().get(i).getGastos().size() + 1, devolverRubroPorNombre(listRubrosRegistrados.getSelectedValue()), 3);
                 sistema.getObras().get(i).setGastos(gasto);
                 JOptionPane.showMessageDialog(this, "Gasto registrado a la obra con nro de permiso " + sistema.getObras().get(i).getNumeroDePermiso() + "\nNumero de gasto para esta obra: " + gasto.getNumeroDeGasto());
                 txtMonto.setText("");
