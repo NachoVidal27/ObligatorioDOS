@@ -195,8 +195,9 @@ public class RegistroObra extends javax.swing.JFrame {
         jList2.setListData(propietariosArray);
     }
 
+
     //
-    private void actualizarPanelRubros() {
+     private void actualizarPanelRubros() {
         presupuestoTotal = 0;
         panelRubros.removeAll();
         panelRubros.setLayout(new GridLayout(8, 2));
@@ -225,7 +226,8 @@ public class RegistroObra extends javax.swing.JFrame {
 
     }
 
-   private class RubroListener implements ActionListener {
+
+     private class RubroListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -253,7 +255,8 @@ public class RegistroObra extends javax.swing.JFrame {
         }
     }
 
-    public void crearObra() {
+
+        public void crearObra() {
         // Capturar los valores de los componentes y crear un objeto Obra
         String permiso = jTextField1.getText();
         String direccion = jTextField2.getText();
@@ -292,11 +295,12 @@ public class RegistroObra extends javax.swing.JFrame {
 
     }
 
+
     //
     /**
      * @param args
      */
-    public static void main(String args[]) {
+        public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

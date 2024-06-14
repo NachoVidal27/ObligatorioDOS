@@ -61,7 +61,7 @@ public class Sistema {
         sistema.generarPropietarios();
         //Termina de crear datos de prueba
         
-        EstadoDeObra vent = new EstadoDeObra(sistema);
+        RegistroObra vent = new RegistroObra(sistema);
         vent.setVisible(true);
 
     }
