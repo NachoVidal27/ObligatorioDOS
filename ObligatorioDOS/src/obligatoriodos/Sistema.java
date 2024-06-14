@@ -18,53 +18,26 @@ public class Sistema {
 
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("Rubros"));
-            Rubro Pintura = (Rubro) in.readObject();
-            sistema.setRubro(Pintura);
-            Rubro Sanitaria = (Rubro) in.readObject();
-            sistema.setRubro(Sanitaria);
-            Rubro Eléctrica = (Rubro) in.readObject();
-            sistema.setRubro(Eléctrica);
-            Rubro Carpintería = (Rubro) in.readObject();
-            sistema.setRubro(Carpintería);
-            Rubro Albañilería = (Rubro) in.readObject();
-            sistema.setRubro(Albañilería);
-            Rubro Pisos = (Rubro) in.readObject();
-            sistema.setRubro(Pisos);
-            Rubro CambiodeVentanas = (Rubro) in.readObject();
-            sistema.setRubro(CambiodeVentanas);
-            Rubro Baño = (Rubro) in.readObject();
-            sistema.setRubro(Baño);
-            Rubro Cocina = (Rubro) in.readObject();
-            sistema.setRubro(Cocina);
-            Rubro Aislamiento = (Rubro) in.readObject();
-            sistema.setRubro(Aislamiento);
-            in.close();
-            Propietario prop = new Propietario("juan", "123", "abc", 123);
-            Capataz cap = new Capataz("pedro", "123", "abc");
-            Obra Eléctrica2 = new Obra(prop, cap, "obra 1", 0, 0, 0, 524);
-            sistema.setObra(Eléctrica2);
-            Eléctrica2.setRubrosNoPresupuestados(Aislamiento);
-            Cocina.setPresupuesto(1000);
-            Eléctrica2.setRubrosPresupuestados(Cocina);
-            Obra Eléctrica3 = new Obra(null, null, "obra 2", 0, 0, 0, 54);
-            sistema.setObra(Eléctrica3);
-            Gasto gasto = new Gasto(1200, 6, 2024, "desc", 1, Aislamiento, false);
-            Eléctrica2.setGastos(gasto);
-            Gasto gasto5 = new Gasto(1200, 6, 2024, "desc", 3, Cocina, true);
-            Eléctrica2.setGastos(gasto5);
-            Gasto gasto2 = new Gasto(1800, 6, 2024, "desc2", 2, Aislamiento, false);
-            Eléctrica2.setGastos(gasto2);
-            Gasto gasto3 = new Gasto(600, 6, 2024, "desc3", 1, Aislamiento, false);
-            Eléctrica3.setGastos(gasto3);
-            Gasto gasto4 = new Gasto(600, 6, 2024, "desc3", 2, Aislamiento, false);
-            Eléctrica3.setGastos(gasto4);
-        } catch (ClassNotFoundException e) {
-            System.out.println(e);
-        } catch (IOException e) {
-            System.out.println(e.toString());
-        }
+        Rubro Pintura = new Rubro("Pintura", "Renovación de Pintura", 0);
+        Rubro Sanitaria = new Rubro("Sanitaria", "Reparación de Sanitaria", 0);
+        Rubro Eléctrica = new Rubro("Eléctrica", "Instalación Eléctrica", 0);
+        Rubro Carpintería = new Rubro("Carpintería", "Trabajo en Madera", 0);
+        Rubro Albañilería = new Rubro("Albañilería", "Reparación de Paredes", 0);
+        Rubro Pisos = new Rubro("Pisos", "Instalación de pisos", 0);
+        Rubro CambiodeVentanas = new Rubro("Cambio de Ventanas", "Reemplazo de Ventanas", 0);
+        Rubro Baño = new Rubro("Baño", "Remodelación de Baño", 0);
+        Rubro Cocina = new Rubro("Cocina", "Renovación de Cocina", 0);
+        Rubro Aislamiento = new Rubro("Aislamiento", "Mejora Térmica", 0);
+        sistema.setRubro(Pintura);
+        sistema.setRubro(Sanitaria);
+        sistema.setRubro(Eléctrica);
+        sistema.setRubro(Carpintería);
+        sistema.setRubro(Albañilería);
+        sistema.setRubro(Pisos);
+        sistema.setRubro(CambiodeVentanas);
+        sistema.setRubro(Baño);
+        sistema.setRubro(Cocina);
+        sistema.setRubro(Aislamiento);
         sistema.generarCapataces();
         sistema.generarPropietarios();
         RegistroObra vent = new RegistroObra(sistema);
