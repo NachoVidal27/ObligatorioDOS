@@ -13,13 +13,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import modelos.*;
 
 public class RegistroObra extends javax.swing.JFrame {
 
     private static final Rubro Aislamiento = null;
-
+    ArrayList<Rubro> rubrosPresupuestados;
     /**
      * Creates new form RegistroObra
      */
@@ -29,6 +30,7 @@ public class RegistroObra extends javax.swing.JFrame {
     private ArrayList<Propietario> listaPropietarios;
     private ArrayList<Rubro> listaRubros;
     int presupuestoTotal = 0;
+ 
 
     //
     public RegistroObra(Sistema sistema) {
@@ -53,7 +55,8 @@ public class RegistroObra extends javax.swing.JFrame {
     // @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -101,8 +104,14 @@ public class RegistroObra extends javax.swing.JFrame {
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+
+            public int getSize() {
+                return strings.length;
+            }
+
+            public String getElementAt(int i) {
+                return strings[i];
+            }
         });
         jScrollPane1.setViewportView(jList1);
 
@@ -111,8 +120,14 @@ public class RegistroObra extends javax.swing.JFrame {
 
         jList2.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+
+            public int getSize() {
+                return strings.length;
+            }
+
+            public String getElementAt(int i) {
+                return strings[i];
+            }
         });
         jScrollPane2.setViewportView(jList2);
 
@@ -182,30 +197,59 @@ public class RegistroObra extends javax.swing.JFrame {
 
     //
     private void actualizarPanelRubros() {
+        presupuestoTotal = 0;
         panelRubros.removeAll();
-        panelRubros.setLayout(new GridLayout(2, 2));
+        panelRubros.setLayout(new GridLayout(8, 2));
         for (Rubro rubro : listaRubros) {
-            String rubroTxt = rubro.getNombre() + " " + rubro.getPresupuesto();
-            // String rubroTxt = rubro.getNombre() + " " + rubro.getCosto();
-
+            String rubroTxt;
             JButton nuevo = new JButton();
             nuevo.setMargin(new Insets(0, 0, 0, 0));
-            nuevo.setBackground(Color.BLACK);
+            if (rubro.getPresupuesto() > 0) {
+                nuevo.setBackground(Color.BLUE);
+                rubroTxt = rubro.getNombre() + " " + rubro.getPresupuesto();
+                presupuestoTotal += rubro.getPresupuesto();
+              
+            } else {
+                nuevo.setBackground(Color.BLACK);
+                rubroTxt = rubro.getNombre();
+            }
+
             nuevo.setForeground(Color.WHITE);
             nuevo.setText(rubroTxt);
             nuevo.addActionListener(new RubroListener());
             panelRubros.add(nuevo);
         }
+        jLabel3.setText("" + presupuestoTotal);
         panelRubros.revalidate();
         panelRubros.repaint();
+
     }
 
-    private class RubroListener implements ActionListener {
+   private class RubroListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             JButton cual = (JButton) e.getSource();
-            cual.setBackground(Color.BLUE);
+            String[] partes = cual.getText().split(" ");
+            String nombreRubro = partes[0];
+
+            String montoStr = JOptionPane.showInputDialog(null, "Ingrese monto para el rubro " + cual.getText(), "Monto", JOptionPane.PLAIN_MESSAGE);
+            try {
+                int monto = Integer.parseInt(montoStr);
+                cual.setText(nombreRubro + " - " + monto);
+                cual.setBackground(Color.BLUE);
+
+                // Buscar el rubro correspondiente en el sistema y actualizar su costo
+                for (Rubro rubro : sistema.getRubros()) {
+                    if (rubro.getNombre().equals(nombreRubro)) {
+                        rubro.setPresupuesto(monto);
+                        actualizarPanelRubros();
+                        break;
+                    }
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -235,23 +279,7 @@ public class RegistroObra extends javax.swing.JFrame {
 
         // importante recuperar
         // Capturar los rubros seleccionados
-        for (Component componente : panelRubros.getComponents()) {
-            if (componente instanceof JButton) {
-                JButton botonRubro = (JButton) componente;
-                if (botonRubro.getBackground().equals(Color.BLUE)) { // Suponiendo que el color indica la seleccion
-                    // Obtener el texto del botón y parsear el nombre y costo del rubro
-                    String[] partes = botonRubro.getText().split(" ");
-                    String nombreRubro = partes[0];
-                    double costoRubro = Double.parseDouble(partes[1]);
-                    presupuestoTotal += costoRubro;
-                    int cantidad = 2;
-                    // Crear un objeto Gasto con el nombre y costo del rubro y añadirlo a la obra
-                    Gasto gasto = new Gasto((int) costoRubro, mes, anio, "descripción", cantidad, Aislamiento, false);
-                    System.out.println(gasto);
-                    nuevaObra.setGastos(gasto);
-                }
-            }
-        }
+        
         nuevaObra.setPresupuestoTotal(presupuestoTotal);
         sistema.setObra(nuevaObra);
         System.out.println("el presupuesto total da " + nuevaObra.getPresupuestoTotal());
