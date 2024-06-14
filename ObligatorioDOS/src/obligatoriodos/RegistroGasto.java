@@ -93,7 +93,9 @@ public class RegistroGasto extends javax.swing.JFrame {
         jLabel3.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Registrar gasto");
         setMinimumSize(new java.awt.Dimension(400, 300));
+        setResizable(false);
 
         jPanel1.setMinimumSize(new java.awt.Dimension(690, 430));
         jPanel1.setLayout(null);
@@ -179,11 +181,11 @@ public class RegistroGasto extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
         );
 
         pack();
@@ -200,6 +202,9 @@ public class RegistroGasto extends javax.swing.JFrame {
                 int mes = (Integer) spnMes.getValue();
                 int anio = (Integer) spnAnio.getValue();
                 Gasto gasto = new Gasto(monto, mes, anio, txtAreaDescripcion.getText(), sistema.getObras().get(i).getGastos().size() + 1, devolverRubroPorNombre(listRubrosRegistrados.getSelectedValue()), false);
+                if (!sistema.getObras().get(i).rubroEsPresupuestado(devolverRubroPorNombre(listRubrosRegistrados.getSelectedValue()).getNombre())){
+                    sistema.getObras().get(i).setRubrosNoPresupuestados(gasto.getRubro());
+                }
                 sistema.getObras().get(i).setGastos(gasto);
                 JOptionPane.showMessageDialog(this, "Gasto registrado a la obra con nro de permiso " + sistema.getObras().get(i).getNumeroDePermiso() + "\nNumero de gasto para esta obra: " + gasto.getNumeroDeGasto());
                 txtMonto.setText("");

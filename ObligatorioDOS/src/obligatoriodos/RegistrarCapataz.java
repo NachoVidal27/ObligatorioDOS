@@ -53,7 +53,7 @@ public class RegistrarCapataz extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -92,7 +92,6 @@ public class RegistrarCapataz extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtCedulaFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCedulaFocusLost(evt);
             }
@@ -110,7 +109,6 @@ public class RegistrarCapataz extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtNombreFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtNombreFocusLost(evt);
             }
@@ -132,7 +130,6 @@ public class RegistrarCapataz extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtDireccionFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtDireccionFocusLost(evt);
             }
@@ -146,7 +143,6 @@ public class RegistrarCapataz extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtAnioFocusGained(evt);
             }
-
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtAnioFocusLost(evt);
             }
@@ -162,11 +158,6 @@ public class RegistrarCapataz extends javax.swing.JFrame {
         jLabel5.setBounds(10, 10, 240, 40);
 
         btnRegistrarCapataz.setText("Registrar");
-        btnRegistrarCapataz.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarCapatazActionPerformed(evt);
-            }
-        });
         jPanel1.add(btnRegistrarCapataz);
         btnRegistrarCapataz.setBounds(130, 290, 120, 30);
 

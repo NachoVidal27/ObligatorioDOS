@@ -37,7 +37,7 @@ public class RegistrarRubro extends javax.swing.JFrame {
      */
     // @SuppressWarnings()
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -53,21 +53,15 @@ public class RegistrarRubro extends javax.swing.JFrame {
         btnRegistrarRubro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Registrar rubro");
         setMinimumSize(new java.awt.Dimension(400, 380));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         listRubrosRegistrados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-
-            @Override
-            public int getSize() {
-                return strings.length;
-            }
-
-            @Override
-            public String getElementAt(int i) {
-                return strings[i];
-            }
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(listRubrosRegistrados);
 
@@ -106,7 +100,6 @@ public class RegistrarRubro extends javax.swing.JFrame {
 
         btnRegistrarRubro.setText("Registrar");
         btnRegistrarRubro.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRegistrarRubroMouseClicked(evt);
             }

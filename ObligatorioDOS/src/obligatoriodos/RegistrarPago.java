@@ -69,7 +69,9 @@ public class RegistrarPago extends javax.swing.JFrame {
         btnRegistrarPago = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Registrar pago");
         setMinimumSize(new java.awt.Dimension(400, 390));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jPanel1.setMinimumSize(new java.awt.Dimension(400, 380));

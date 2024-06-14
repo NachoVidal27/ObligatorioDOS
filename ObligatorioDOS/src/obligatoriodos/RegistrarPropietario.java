@@ -96,7 +96,7 @@ public class RegistrarPropietario extends javax.swing.JFrame {
      */
     // @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         txtCedula = new javax.swing.JTextField();
@@ -115,17 +115,15 @@ public class RegistrarPropietario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Registrar propietario");
         setMinimumSize(new java.awt.Dimension(400, 380));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         txtCedula.setForeground(java.awt.Color.lightGray);
         txtCedula.setText("Ej: 12345678");
         txtCedula.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtCedulaFocusGained(evt);
             }
-
-            @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCedulaFocusLost(evt);
             }
@@ -140,12 +138,9 @@ public class RegistrarPropietario extends javax.swing.JFrame {
         txtNombre.setForeground(java.awt.Color.lightGray);
         txtNombre.setText("Ej: Juan Gonzalez");
         txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtNombreFocusGained(evt);
             }
-
-            @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtNombreFocusLost(evt);
             }
@@ -164,12 +159,9 @@ public class RegistrarPropietario extends javax.swing.JFrame {
         txtDireccion.setForeground(java.awt.Color.lightGray);
         txtDireccion.setText("Ej: Cuareim 1451");
         txtDireccion.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtDireccionFocusGained(evt);
             }
-
-            @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtDireccionFocusLost(evt);
             }
@@ -180,12 +172,9 @@ public class RegistrarPropietario extends javax.swing.JFrame {
         txtCelular.setForeground(java.awt.Color.lightGray);
         txtCelular.setText("Ej: 123456789");
         txtCelular.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtCelularFocusGained(evt);
             }
-
-            @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtCelularFocusLost(evt);
             }

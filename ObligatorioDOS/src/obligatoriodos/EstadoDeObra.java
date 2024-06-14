@@ -7,10 +7,6 @@ package obligatoriodos;
 import java.awt.Color;
 import java.awt.Component;
 import static java.lang.Integer.parseInt;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -23,16 +19,9 @@ public class EstadoDeObra extends JFrame {
      * Creates new form EstadoDeObra
      */
     private Sistema sistema;
-    private Color[] colors;
+    public Color[] colors;
 
     public EstadoDeObra(Sistema sistema) {
-        //Color[] colors = {Color.red, Color.red, Color.GREEN};
-        // Crear un arreglo de enteros
-        int[] intArray = {1, 2, 1, 2};
-
-        // Obtener el arreglo de colores usando la función
-        //Color[] colors = ColorUtils.getColorArray(intArray);
-        this.colors = colors;
         this.sistema = sistema;
         initComponents();
         listRubrosDeObra.setCellRenderer(new BulletListCellRenderer());
@@ -42,6 +31,9 @@ public class EstadoDeObra extends JFrame {
     private void cargarObrasALista() {
         String empty[] = {""};
         listObrasRegistradas.setListData(empty);
+        listRubrosDeObra.setListData(empty);
+        listGastosDelRubro.setListData(empty);
+        listRubrosConGastos.setListData(empty);
         String[] arrayObras = new String[sistema.getObras().size()];
         for (int i = 0; i < sistema.getObras().size(); i++) {
             arrayObras[i] = sistema.getObras().get(i).getNumeroDePermiso() + ", " + sistema.getObras().get(i).getDireccion();
@@ -65,24 +57,25 @@ public class EstadoDeObra extends JFrame {
         Color NPyR = new Color(255, 204, 102);
         Color NPyNR = new Color(255, 153, 153);
         int contador = 0;
-        Color[] colors = new Color[obra.getGastos().size()];
-        for(int i = 0; i < obra.getGastos().size(); i++){
-            if (obra.getGastos().get(i).getReintegrado() && obra.rubroEsPresupuestado(obra.getGastos().get(i).getRubro().getNombre())){
-                colors[contador] = PyR;
+        Color[] localColors = new Color[obra.getGastos().size()];
+        for (int i = 0; i < obra.getGastos().size(); i++) {
+            if (obra.getGastos().get(i).getReintegrado() && obra.rubroEsPresupuestado(obra.getGastos().get(i).getRubro().getNombre())) {
+                localColors[contador] = PyR;
                 contador++;
-            } else if (!obra.getGastos().get(i).getReintegrado() && obra.rubroEsPresupuestado(obra.getGastos().get(i).getRubro().getNombre())){
-                colors[contador] = PyNR;
+            } else if (!obra.getGastos().get(i).getReintegrado() && obra.rubroEsPresupuestado(obra.getGastos().get(i).getRubro().getNombre())) {
+                localColors[contador] = PyNR;
                 contador++;
-            } else if (obra.getGastos().get(i).getReintegrado() && !obra.rubroEsPresupuestado(obra.getGastos().get(i).getRubro().getNombre())){
-                colors[contador] = NPyR;
+            } else if (obra.getGastos().get(i).getReintegrado() && !obra.rubroEsPresupuestado(obra.getGastos().get(i).getRubro().getNombre())) {
+                localColors[contador] = NPyR;
                 contador++;
             } else {
-                colors[contador] = NPyNR;
+                localColors[contador] = NPyNR;
                 contador++;
             }
         }
         listGastosDelRubro.setListData(arrayGastos);
-        //listGastosDelRubro.setCellRenderer(new CustomListCellRenderer());
+        listGastosDelRubro.setCellRenderer(new CustomListCellRenderer());
+        colors = localColors;
     }
 
     private void cargarGastosDelRubroALista(Obra obra, String rubroSeleccionado) {
@@ -91,7 +84,7 @@ public class EstadoDeObra extends JFrame {
         String[] arrayGastos = new String[obra.getGastos().size()];
         for (int i = 0; i < arrayGastos.length; i++) {
             if (obra.getGastos().get(i).getRubro().getNombre().equals(rubroSeleccionado)) {
-                arrayGastos[i] = String.valueOf(obra.getGastos().get(i).getMonto() + " - Nro. " + obra.getGastos().get(i).getNumeroDeGasto() + " - " + obra.getGastos().get(i).getDescripcion());
+                arrayGastos[i] = String.valueOf("Nro. " + obra.getGastos().get(i).getNumeroDeGasto() + " de " + obra.getGastos().get(i).getMes() + "/" + obra.getGastos().get(i).getAnio() + " " + obra.getGastos().get(i).getDescripcion() + " $" + obra.getGastos().get(i).getMonto());
             }
         }
         asignarColoresAGastos(obra, arrayGastos);
@@ -154,8 +147,14 @@ public class EstadoDeObra extends JFrame {
         jLabel26 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Estado de obra");
+        setMaximumSize(new java.awt.Dimension(755, 464));
+        setMinimumSize(new java.awt.Dimension(755, 464));
+        setResizable(false);
 
+        jPanel1.setMaximumSize(new java.awt.Dimension(755, 464));
         jPanel1.setMinimumSize(new java.awt.Dimension(755, 464));
+        jPanel1.setName("Estado de obra"); // NOI18N
         jPanel1.setLayout(null);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -165,7 +164,7 @@ public class EstadoDeObra extends JFrame {
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(0, 60, 840, 10);
         jPanel1.add(lblComienzo);
-        lblComienzo.setBounds(350, 100, 220, 20);
+        lblComienzo.setBounds(340, 100, 220, 20);
 
         listObrasRegistradas.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item1", "Item2" };
@@ -186,12 +185,12 @@ public class EstadoDeObra extends JFrame {
         jPanel1.add(jLabel2);
         jLabel2.setBounds(10, 70, 50, 16);
         jPanel1.add(lblCapataz);
-        lblCapataz.setBounds(620, 70, 190, 20);
+        lblCapataz.setBounds(610, 70, 180, 20);
 
         lblTotalPresupuestado.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTotalPresupuestado.setText("0");
         jPanel1.add(lblTotalPresupuestado);
-        lblTotalPresupuestado.setBounds(370, 140, 90, 16);
+        lblTotalPresupuestado.setBounds(380, 140, 90, 16);
 
         jLabel6.setText("Saldo:");
         jPanel1.add(jLabel6);
@@ -199,13 +198,13 @@ public class EstadoDeObra extends JFrame {
 
         jLabel7.setText("Propietario:");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(250, 70, 70, 16);
+        jLabel7.setBounds(250, 70, 70, 20);
         jPanel1.add(lblPropietario);
         lblPropietario.setBounds(320, 70, 220, 20);
 
         jLabel9.setText("Comienzo obra:");
         jPanel1.add(jLabel9);
-        jLabel9.setBounds(250, 100, 90, 16);
+        jLabel9.setBounds(250, 100, 90, 20);
 
         jLabel10.setText("Total presupuestado:");
         jPanel1.add(jLabel10);
@@ -240,7 +239,7 @@ public class EstadoDeObra extends JFrame {
 
         jLabel17.setText("Capataz:");
         jPanel1.add(jLabel17);
-        jLabel17.setBounds(560, 70, 60, 16);
+        jLabel17.setBounds(560, 70, 60, 20);
 
         lblNoReintegrado.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblNoReintegrado.setText("0");
@@ -326,7 +325,7 @@ public class EstadoDeObra extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,10 +336,12 @@ public class EstadoDeObra extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void listObrasRegistradasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listObrasRegistradasMouseClicked
+        String empty[] = {""};
+        listGastosDelRubro.setListData(empty);
         for (int i = 0; i < sistema.getObras().size(); i++) {
             if (parseInt(listObrasRegistradas.getSelectedValue().split(",", 2)[0]) == (sistema.getObras().get(i).getNumeroDePermiso())) {
-                lblPropietario.setText(sistema.getObras().get(i).getPropietario().getNombre());
-                lblCapataz.setText(sistema.getObras().get(i).getCapataz().getNombre());
+                lblPropietario.setText(sistema.getObras().get(i).getPropietario().getNombre() + " (" + sistema.getObras().get(i).getPropietario().getCedula()+")");
+                lblCapataz.setText(sistema.getObras().get(i).getCapataz().getNombre()+ " (" + sistema.getObras().get(i).getCapataz().getCedula()+")");
                 lblComienzo.setText(sistema.getObras().get(i).getMesDeComienzo() + "/" + sistema.getObras().get(i).getAnioDeComienzo());
                 lblTotalPresupuestado.setText("" + sistema.getObras().get(i).getPresupuestoTotal());
                 lblTotalGastado.setText("" + sistema.getObras().get(i).getTotalGastado());
@@ -439,7 +440,12 @@ public class EstadoDeObra extends JFrame {
         @Override
         public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
             // Agregar bullet al texto
-            setText("• " + value);
+            if (value.equals("")) {
+                setText(value);
+            } else {
+                setText("• " + value);
+            }
+
             return this;
         }
     }
