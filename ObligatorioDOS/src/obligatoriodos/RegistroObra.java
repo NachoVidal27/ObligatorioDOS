@@ -274,13 +274,18 @@ public class RegistroObra extends javax.swing.JFrame {
         System.out.println("el capataz tiene el valor " + capatazSeleccionado.getNombre());
 
         // Crear un objeto Obra con los valores capturados
-        Obra nuevaObra = new Obra(propietarioSeleccionado, capatazSeleccionado, direccion, mes, anio, 0,
+        Obra nuevaObra = new Obra(propietarioSeleccionado, capatazSeleccionado, direccion, mes, anio, presupuestoTotal,
                 Integer.parseInt(permiso));
 
         // importante recuperar
         // Capturar los rubros seleccionados
-        
-        nuevaObra.setPresupuestoTotal(presupuestoTotal);
+        for(Rubro rubro : listaRubros){
+            if(rubro.getPresupuesto() > 0) {
+                nuevaObra.setRubrosPresupuestados(rubro);
+                System.out.println("agregamos el rubro " + rubro.getNombre());                      
+            }
+        }
+     
         sistema.setObra(nuevaObra);
         System.out.println("el presupuesto total da " + nuevaObra.getPresupuestoTotal());
         System.out.println(sistema.getObras());
