@@ -1,14 +1,22 @@
 package obligatoriodos;
 
-public class PedirOpcion extends javax.swing.JFrame {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-    public PedirOpcion() {
+public class PedirOpcion extends javax.swing.JFrame {
+    
+    String selection;
+    boolean haySeleccion;
+    Sistema sistema;
+    
+    public PedirOpcion(Sistema sistema) {
+        this.sistema = sistema;
         initComponents();
+      
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         jFrame1 = new javax.swing.JFrame();
@@ -21,13 +29,11 @@ public class PedirOpcion extends javax.swing.JFrame {
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
+                jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 400, Short.MAX_VALUE));
         jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+                jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 300, Short.MAX_VALUE));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Comenzar con...");
@@ -54,24 +60,55 @@ public class PedirOpcion extends javax.swing.JFrame {
         pnlPanelPrimerOpcion.add(btnSistemaAnterior);
         btnSistemaAnterior.setBounds(170, 80, 130, 23);
 
-        btnSistemaVacio.setText("Sistema Vacío");
+        btnSistemaVacio.setText("Sistema Vaco");
         btnSistemaVacio.setName("btnSistemaVacio"); // NOI18N
         pnlPanelPrimerOpcion.add(btnSistemaVacio);
         btnSistemaVacio.setBounds(20, 80, 130, 23);
 
+        // Adding ActionListeners to the buttons
+        btnSoloRubros.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selection = "soloRubros";
+                haySeleccion = true;
+                sistema.setModo(selection);
+            
+            }
+        });
+
+        btnSistemaAnterior.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selection = "sistemaAnterior";
+                haySeleccion = true;
+                sistema.setModo(selection);
+          
+            }
+        });
+
+        btnSistemaVacio.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selection = "sistemaVacio";
+                haySeleccion = true;
+                sistema.setModo(selection);
+            
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlPanelPrimerOpcion, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(pnlPanelPrimerOpcion, javax.swing.GroupLayout.DEFAULT_SIZE, 467,
+                                Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlPanelPrimerOpcion, javax.swing.GroupLayout.PREFERRED_SIZE, 126, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(pnlPanelPrimerOpcion, javax.swing.GroupLayout.PREFERRED_SIZE, 126,
+                                Short.MAX_VALUE));
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>
 
     public static void ventana() {
         /* Set the Nimbus look and feel */
@@ -108,16 +145,17 @@ public class PedirOpcion extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new PedirOpcion().setVisible(true);
+            Sistema sistema = new Sistema();
+            new PedirOpcion(sistema).setVisible(true);
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify
     private javax.swing.JButton btnSistemaAnterior;
     private javax.swing.JButton btnSistemaVacio;
     private javax.swing.JButton btnSoloRubros;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel lblSeleccioneOpcion;
     private javax.swing.JPanel pnlPanelPrimerOpcion;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration
 }

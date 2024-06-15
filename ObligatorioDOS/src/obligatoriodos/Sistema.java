@@ -1,22 +1,51 @@
 package obligatoriodos;
- 
+
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import modelos.*;
- 
+
 public class Sistema {
- 
+
     private ArrayList<Propietario> propietarios = new ArrayList<>();
     private ArrayList<Rubro> rubros = new ArrayList<>();
     private ArrayList<Obra> obras = new ArrayList<>();
     private ArrayList<Capataz> capataces = new ArrayList<>();
- 
+    String modo;
+
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
         //Crea rubros
+        cargarRubros(sistema);
+        //Termina de crear rubros
+        //--
+        //iniciamos abriendo una ventana con el hero y configurando un time out para que se cierre en 3 segundos
+        Hero heroVent = new Hero();
+        heroVent.setVisible(true);
+        //accionamos el time out para cerrar la ventana luego de 3 segundos
+        CompletableFuture.delayedExecutor(3, TimeUnit.SECONDS).execute(() -> {
+            heroVent.setVisible(false);
+            PedirOpcion pedirOpcionVent = new PedirOpcion(sistema);
+            while (!pedirOpcionVent.haySeleccion) {
+                pedirOpcionVent.setVisible(true);
+            }
+            if (pedirOpcionVent.haySeleccion) {
+                System.out.println("hay seleccion");
+                pedirOpcionVent.setVisible(false);
+              //  MenuPrincipal menuPrincipalVent = new MenuPrincipal(sistema);
+               // menuPrincipalVent.setVisible(true);
+               RegistrarPago regVent = new RegistrarPago(sistema);
+               regVent.setVisible(true);
+            }
+        });
+
+    }
+
+    public static void cargarRubros(Sistema sistema) {
         Rubro Pintura = new Rubro("Pintura", "Renovación de Pintura", 0);
         Rubro Sanitaria = new Rubro("Sanitaria", "Reparación de Sanitaria", 0);
         Rubro Eléctrica = new Rubro("Eléctrica", "Instalación Eléctrica", 0);
@@ -37,12 +66,17 @@ public class Sistema {
         sistema.setRubro(Baño);
         sistema.setRubro(Cocina);
         sistema.setRubro(Aislamiento);
-        //Termina de crear rubros
- 
-        //Crea datos de prueba
-        Propietario prop = new Propietario("juan", "123", "abc", 123);
-        Capataz cap = new Capataz("pedro", "123", "abc");
-        Obra Eléctrica2 = new Obra(prop, cap, "obra 1", 0, 0, 0, 524);
+
+        //precargar datos         
+        Propietario prop = new Propietario("ajuan", "123", "abc", 123);
+        sistema.setPropietario(prop);
+        Propietario prop2 = new Propietario("bjuan", "1234", "abc", 123);
+        sistema.setPropietario(prop2);
+        Capataz cap = new Capataz("apedro", "123", "abc");
+        sistema.setCapataz(cap);
+        Capataz cap2 = new Capataz("bpedro", "1234", "abc");
+        sistema.setCapataz(cap2);
+        Obra Eléctrica2 = new Obra(prop, cap, "obra 1", 0, 0, 10000, 524);
         sistema.setObra(Eléctrica2);
         Eléctrica2.setRubrosNoPresupuestados(Aislamiento);
         Cocina.setPresupuesto(1000);
@@ -51,45 +85,42 @@ public class Sistema {
         sistema.setObra(Eléctrica3);
         Gasto gasto = new Gasto(1200, 6, 2024, "desc", 1, Aislamiento, false);
         Eléctrica2.setGastos(gasto);
-        Gasto gasto5 = new Gasto(1200, 6, 2024, "desc", 4, Cocina, true);
-        Eléctrica2.setGastos(gasto5);
-        Gasto gasto6 = new Gasto(1200, 6, 2024, "desc", 3, Cocina, false);
-        Eléctrica2.setGastos(gasto6);
         Gasto gasto2 = new Gasto(1800, 6, 2024, "desc2", 2, Aislamiento, true);
         Eléctrica2.setGastos(gasto2);
         Gasto gasto3 = new Gasto(600, 6, 2024, "desc3", 1, Aislamiento, false);
         Eléctrica3.setGastos(gasto3);
         Gasto gasto4 = new Gasto(600, 6, 2024, "desc3", 2, Aislamiento, false);
         Eléctrica3.setGastos(gasto4);
+        Gasto gasto5 = new Gasto(1200, 6, 2024, "desc", 4, Cocina, true);
+        Eléctrica2.setGastos(gasto5);
+        Gasto gasto6 = new Gasto(1200, 6, 2024, "desc", 3, Cocina, false);
+        Eléctrica2.setGastos(gasto6);
         sistema.generarCapataces();
         sistema.generarPropietarios();
-        //Termina de crear datos de prueba
-
-        RegistroObra vent = new RegistroObra(sistema);
-        vent.setVisible(true);
- 
+        sistema.generarCapataces();
+        sistema.generarPropietarios();
     }
- 
-    // metodos de propietario
+
+// metodos de propietario
     public void setPropietario(Propietario propietario) {
         this.propietarios.add(propietario);
     }
- 
+
     public void generarPropietarios() {
         this.propietarios.add(new Propietario("PropNacho", "49007203", "Rivera 5013", Integer.parseInt("091459408")));
         this.propietarios
                 .add(new Propietario("PropNicolas", "49323003", "Amazonas 1340", Integer.parseInt("09144448")));
     }
- 
+
     public void generarCapataces() {
         this.capataces.add(new Capataz("CapatazNacho", "49007203", "Av italia 5012"));
         this.capataces.add(new Capataz("CapatazNicolas", "49037203", "Michigan 2980"));
     }
- 
+
     public ArrayList<Propietario> getPropietarios() {
         return this.propietarios;
     }
- 
+
     public boolean validarPropietario(Propietario propietario) {
         boolean esValido = true;
         String cedula = propietario.getCedula();
@@ -100,7 +131,7 @@ public class Sistema {
         }
         return esValido;
     }
-    
+
     public boolean validarPermiso(int permiso) {
         boolean esValido = true;
         for (Obra obra : obras) {
@@ -110,34 +141,34 @@ public class Sistema {
         }
         return esValido;
     }
- 
+
     // metodos rubros
     public void setRubro(Rubro rubro) {
         this.rubros.add(rubro);
     }
- 
+
     public ArrayList<Rubro> getRubros() {
         return this.rubros;
     }
- 
+
     // metodos obras
     public void setObra(Obra obra) {
         this.obras.add(obra);
     }
- 
+
     public ArrayList<Obra> getObras() {
         return this.obras;
     }
- 
+
     // metodos catapaces
     public void setCapataz(Capataz capataz) {
         this.capataces.add(capataz);
     }
- 
+
     public ArrayList<Capataz> getCapataces() {
         return this.capataces;
     }
- 
+
     public boolean validarCapataz(Capataz capataz) {
         boolean esValido = true;
         String cedula = capataz.getCedula();
@@ -148,7 +179,7 @@ public class Sistema {
         }
         return esValido;
     }
- 
+
     public Capataz devolverCapatazPorCedula(String cedula) {
         Capataz capataz = new Capataz("nombre capataz", "Sin datos", "Sin datos");
         for (int i = 0; i < capataces.size(); i++) {
@@ -158,7 +189,7 @@ public class Sistema {
         }
         return capataz;
     }
- 
+
     public Propietario devolverPropietarioPorCedula(String cedula) {
         Propietario propietario = new Propietario("nombre propietario", "Sin datos", "Sin datos", 0);
         for (int i = 0; i < propietarios.size(); i++) {
@@ -168,5 +199,19 @@ public class Sistema {
         }
         return propietario;
     }
- 
+
+    public void setModo(String modo) {
+        this.modo = modo;
+    }
+
+    public Rubro devolverRubroPorNombre(String nombreRubro) {
+        Rubro rubro = new Rubro("", "", 0);
+        for (int i = 0; i < rubros.size(); i++) {
+            if (rubros.get(i).getNombre().equals(nombreRubro)) {
+                rubro = rubros.get(i);
+            }
+        }
+        return rubro;
+    }
+
 }

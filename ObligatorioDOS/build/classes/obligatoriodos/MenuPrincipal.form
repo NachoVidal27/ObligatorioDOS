@@ -75,6 +75,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exportaci&#xf3;n de datos de Propietarios y Capataces"/>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="subMenuExportacionDatosMousePressed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

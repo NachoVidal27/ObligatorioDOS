@@ -76,7 +76,7 @@ public class Gasto {
         return reintegrado;
     }
 
-    public void setReintegrado(boolean estado) {
+    public void setReintegrado(boolean reintegrado) {
         this.reintegrado = reintegrado;
     }
 
