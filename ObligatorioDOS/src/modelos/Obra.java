@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @author igjov
  */
 public class Obra {
+
     private Propietario propietario;
     private Capataz capataz;
     private String direccion;
@@ -156,6 +157,16 @@ public class Obra {
             }
         }
         return esPresupuestado;
+    }
+
+    @Override
+    public String toString() {
+        return "la obra numero " + this.getNumeroDePermiso()
+                + " tiene como capataz " + this.getCapataz()
+                + " y como propietario a " + this.getPropietario()
+                + " tiene fecha de comienzo " + this.getMesDeComienzo()
+                + "/" + this.getAnioDeComienzo() + " y un presupuesto total de "
+                + this.getPresupuestoTotal();
     }
 
 }

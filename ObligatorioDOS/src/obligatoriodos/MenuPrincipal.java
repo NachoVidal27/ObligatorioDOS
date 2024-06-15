@@ -4,13 +4,33 @@
  */
 package obligatoriodos;
 
+import java.io.IOException;
+import static java.lang.Integer.parseInt;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
+import modelos.Obra;
+
 public class MenuPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuPrincipal
      */
-    public MenuPrincipal() {
+    private Sistema sistema;
+
+    public MenuPrincipal(Sistema sistema) {
+        this.sistema = sistema;
         initComponents();
+    }
+
+    private int CalcularTotalPresupuestado(String[] datos) {
+        int presupuestoTotal = 0;
+        System.out.println(datos[1]);
+        //for (int x = 1; x < parseInt(datos[6]); x += 2) {
+        //presupuestoTotal += parseInt(datos[x + 7]);
+        //    System.out.println(datos[x]);
+        // }
+        return presupuestoTotal;
     }
 
     /**
@@ -20,7 +40,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     // @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -50,8 +70,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuRegistros.add(subMenuRegistrarRubro);
 
         subMenuRegistrarCapataz.setText("Registrar capataz");
-        subMenuRegistrarCapataz.addActionListener((java.awt.event.ActionEvent evt) -> {
-            subMenuRegistrarCapatazActionPerformed(evt);
+        subMenuRegistrarCapataz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                subMenuRegistrarCapatazActionPerformed(evt);
+            }
         });
         menuRegistros.add(subMenuRegistrarCapataz);
 
@@ -79,6 +101,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuImpYExp.setText("Importación y Exportación");
 
         subMenuImportacionDatosObra.setText("Importación de datos para obra nueva");
+        subMenuImportacionDatosObra.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
+            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
+                subMenuImportacionDatosObraMenuKeyPressed(evt);
+            }
+            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
+            }
+            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
+            }
+        });
+        subMenuImportacionDatosObra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                subMenuImportacionDatosObraMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                subMenuImportacionDatosObraMousePressed(evt);
+            }
+        });
         menuImpYExp.add(subMenuImportacionDatosObra);
 
         subMenuExportacionDatos.setText("Exportación de datos de Propietarios y Capataces");
@@ -90,6 +129,52 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void subMenuImportacionDatosObraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subMenuImportacionDatosObraMouseClicked
+    }//GEN-LAST:event_subMenuImportacionDatosObraMouseClicked
+
+    private void subMenuImportacionDatosObraMenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_subMenuImportacionDatosObraMenuKeyPressed
+    }//GEN-LAST:event_subMenuImportacionDatosObraMenuKeyPressed
+
+    private void subMenuImportacionDatosObraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subMenuImportacionDatosObraMousePressed
+        try {
+            Scanner arch = new Scanner(Paths.get("archivo.txt"));
+            int totalPresupuestado = 0;
+            int cantidadRubros = 0;
+            String[] datosObra = new String[6];
+            ArrayList<String> rubros = new ArrayList();
+            while (arch.hasNext()) {
+                String[] datos = arch.nextLine().split("#");
+                if (datos.length == 6) {
+                    // CI propietario
+                    datosObra[0] = datos[0];
+                    // CI capataz
+                    datosObra[1] = datos[1];
+                    // Direccion
+                    datosObra[2] = datos[2]; 
+                    // Mes de comienzo
+                    datosObra[3] = datos[3]; 
+                    // Anio de comienzo
+                    datosObra[4] = datos[4]; 
+                    //Numero de permiso
+                    datosObra[5] = datos[5]; 
+                }
+                if (datos.length == 1) {
+                    cantidadRubros = parseInt(datos[0]);
+                }
+                if (datos.length == 2) {
+                    rubros.add(datos[0]);
+                    totalPresupuestado += parseInt(datos[1]);
+                }
+            }
+            arch.close();
+            Obra nuevaObra = new Obra(sistema.devolverPropietarioPorCedula(datosObra[0]), sistema.devolverCapatazPorCedula(datosObra[1]), datosObra[2], parseInt(datosObra[3]), parseInt(datosObra[4]), totalPresupuestado, parseInt(datosObra[5]));
+            sistema.setObra(nuevaObra);
+            System.out.println(nuevaObra.toString());
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_subMenuImportacionDatosObraMousePressed
 
     private void subMenuRegistrarCapatazActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_subMenuRegistrarCapatazActionPerformed
         // TODO add your handling code here:
@@ -126,7 +211,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new MenuPrincipal().setVisible(true);
+            // new RegistrarRubro().setVisible(true);
         });
     }
 

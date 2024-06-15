@@ -65,6 +65,11 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Importaci&#xf3;n de datos para obra nueva"/>
               </Properties>
+              <Events>
+                <EventHandler event="menuKeyPressed" listener="javax.swing.event.MenuKeyListener" parameters="javax.swing.event.MenuKeyEvent" handler="subMenuImportacionDatosObraMenuKeyPressed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="subMenuImportacionDatosObraMouseClicked"/>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="subMenuImportacionDatosObraMousePressed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="subMenuExportacionDatos">
               <Properties>
