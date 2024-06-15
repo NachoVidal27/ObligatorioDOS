@@ -30,7 +30,6 @@ public class RegistroObra extends javax.swing.JFrame {
     private ArrayList<Propietario> listaPropietarios;
     private ArrayList<Rubro> listaRubros;
     int presupuestoTotal = 0;
- 
 
     //
     public RegistroObra(Sistema sistema) {
@@ -195,9 +194,8 @@ public class RegistroObra extends javax.swing.JFrame {
         jList2.setListData(propietariosArray);
     }
 
-
     //
-     private void actualizarPanelRubros() {
+    private void actualizarPanelRubros() {
         presupuestoTotal = 0;
         panelRubros.removeAll();
         panelRubros.setLayout(new GridLayout(8, 2));
@@ -209,7 +207,7 @@ public class RegistroObra extends javax.swing.JFrame {
                 nuevo.setBackground(Color.BLUE);
                 rubroTxt = rubro.getNombre() + " " + rubro.getPresupuesto();
                 presupuestoTotal += rubro.getPresupuesto();
-              
+
             } else {
                 nuevo.setBackground(Color.BLACK);
                 rubroTxt = rubro.getNombre();
@@ -226,8 +224,7 @@ public class RegistroObra extends javax.swing.JFrame {
 
     }
 
-
-     private class RubroListener implements ActionListener {
+    private class RubroListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -255,52 +252,45 @@ public class RegistroObra extends javax.swing.JFrame {
         }
     }
 
-
-        public void crearObra() {
+    public void crearObra() {
         // Capturar los valores de los componentes y crear un objeto Obra
         String permiso = jTextField1.getText();
         String direccion = jTextField2.getText();
         int anio = (int) jSpinner1.getValue();
         int mes = (int) jSpinner2.getValue();
-
         // Capturar el propietario seleccionado
         Propietario propietarioSeleccionado = listaPropietarios.get(jList2.getSelectedIndex());
-
         // Capturar el capataz seleccionado
         Capataz capatazSeleccionado = listaCapataces.get(jList1.getSelectedIndex());
-
-        System.out.println("el permiso tiene el valor " + permiso);
-        System.out.println("la direccion tiene el valor " + direccion);
-        System.out.println("el mes tiene el valor " + mes);
-        System.out.println("el año tiene el valor " + anio);
-        System.out.println("el propietario tiene el valor " + propietarioSeleccionado.getNombre());
-        System.out.println("el capataz tiene el valor " + capatazSeleccionado.getNombre());
-
         // Crear un objeto Obra con los valores capturados
-        Obra nuevaObra = new Obra(propietarioSeleccionado, capatazSeleccionado, direccion, mes, anio, presupuestoTotal,
-                Integer.parseInt(permiso));
-
-        // importante recuperar
-        // Capturar los rubros seleccionados
-        for(Rubro rubro : listaRubros){
-            if(rubro.getPresupuesto() > 0) {
-                nuevaObra.setRubrosPresupuestados(rubro);
-                System.out.println("agregamos el rubro " + rubro.getNombre());                      
+        if (sistema.validarPermiso(Integer.parseInt(permiso))) {
+            Obra nuevaObra = new Obra(propietarioSeleccionado, capatazSeleccionado, direccion, mes, anio, presupuestoTotal,
+                    Integer.parseInt(permiso));
+            // importante recuperar
+            // Capturar los rubros seleccionados
+            for (Rubro rubro : listaRubros) {
+                if (rubro.getPresupuesto() > 0) {
+                    nuevaObra.setRubrosPresupuestados(rubro);
+                    System.out.println("agregamos el rubro " + rubro.getNombre());
+                }
             }
+            sistema.setObra(nuevaObra);
+            System.out.println("el presupuesto total da " + nuevaObra.getPresupuestoTotal());
+            System.out.println(sistema.getObras());
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "El número de permiso ingresado ya está en uso.");
+            // Limpiar campo de cédula y mantener otros campos
+            jTextField1.setText("");
         }
-     
-        sistema.setObra(nuevaObra);
-        System.out.println("el presupuesto total da " + nuevaObra.getPresupuestoTotal());
-        System.out.println(sistema.getObras());
 
     }
-
 
     //
     /**
      * @param args
      */
-        public static void main(String args[]) {
+    public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
