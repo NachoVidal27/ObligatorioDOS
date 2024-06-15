@@ -65,7 +65,7 @@ public class Sistema {
         sistema.generarPropietarios();
         //Termina de crear datos de prueba
 
-        MenuPrincipal vent = new MenuPrincipal(sistema);
+        RegistroObra vent = new RegistroObra(sistema);
         vent.setVisible(true);
  
     }
@@ -95,6 +95,16 @@ public class Sistema {
         String cedula = propietario.getCedula();
         for (Propietario p : propietarios) {
             if (p.getCedula().equals(cedula)) {
+                esValido = false;
+            }
+        }
+        return esValido;
+    }
+    
+    public boolean validarPermiso(int permiso) {
+        boolean esValido = true;
+        for (Obra obra : obras) {
+            if (permiso == obra.getNumeroDePermiso()) {
                 esValido = false;
             }
         }
