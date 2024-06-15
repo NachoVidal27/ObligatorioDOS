@@ -19,6 +19,7 @@
                 <Property name="text" type="java.lang.String" value="Registrar capataz"/>
               </Properties>
               <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="subMenuRegistrarCapatazMousePressed"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="subMenuRegistrarCapatazActionPerformed"/>
               </Events>
             </MenuItem>

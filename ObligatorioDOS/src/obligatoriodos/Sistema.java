@@ -36,13 +36,13 @@ public class Sistema {
             if (pedirOpcionVent.haySeleccion) {
                 System.out.println("hay seleccion");
                 pedirOpcionVent.setVisible(false);
-              //  MenuPrincipal menuPrincipalVent = new MenuPrincipal(sistema);
-               // menuPrincipalVent.setVisible(true);
-               RegistrarPago regVent = new RegistrarPago(sistema);
-               regVent.setVisible(true);
+                RegistrarCapataz regCa = new RegistrarCapataz(sistema);
+                regCa.setVisible(true);
+                //MenuPrincipal menuPrincipalVent = new MenuPrincipal(sistema);
+                //menuPrincipalVent.setVisible(true);
+
             }
         });
-
     }
 
     public static void cargarRubros(Sistema sistema) {
@@ -213,5 +213,10 @@ public class Sistema {
         }
         return rubro;
     }
+    
+    
+    
+    
+ 
 
 }

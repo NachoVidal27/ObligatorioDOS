@@ -60,7 +60,7 @@ public class PedirOpcion extends javax.swing.JFrame {
         pnlPanelPrimerOpcion.add(btnSistemaAnterior);
         btnSistemaAnterior.setBounds(170, 80, 130, 23);
 
-        btnSistemaVacio.setText("Sistema Vaco");
+        btnSistemaVacio.setText("Sistema Vacio");
         btnSistemaVacio.setName("btnSistemaVacio"); // NOI18N
         pnlPanelPrimerOpcion.add(btnSistemaVacio);
         btnSistemaVacio.setBounds(20, 80, 130, 23);

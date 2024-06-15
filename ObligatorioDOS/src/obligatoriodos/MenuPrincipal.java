@@ -74,6 +74,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         menuRegistros.add(subMenuRegistrarRubro);
 
         subMenuRegistrarCapataz.setText("Registrar capataz");
+        subMenuRegistrarCapataz.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                subMenuRegistrarCapatazMousePressed(evt);
+            }
+        });
         subMenuRegistrarCapataz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 subMenuRegistrarCapatazActionPerformed(evt);
@@ -260,10 +265,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_subMenuExportacionDatosMousePressed
 
-    private void subMenuRegistrarCapatazActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_subMenuRegistrarCapatazActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_subMenuRegistrarCapatazActionPerformed
+    private void subMenuRegistrarCapatazMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subMenuRegistrarCapatazMousePressed
+        RegistrarCapataz registrarCapatazVent = new RegistrarCapataz(this, sistema); // 'this' representa el JFrame actual
+    registrarCapatazVent.setVisible(true);
+    }//GEN-LAST:event_subMenuRegistrarCapatazMousePressed
 
+ 
     /**
      * @param args the command line arguments
      */
