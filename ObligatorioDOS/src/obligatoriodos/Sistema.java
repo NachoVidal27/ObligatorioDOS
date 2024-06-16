@@ -57,8 +57,6 @@ public class Sistema implements Serializable {
                             sistema.rubros = (ArrayList<Rubro>) in.readObject();
                             sistema.obras = (ArrayList<Obra>) in.readObject();
                             sistema.capataces = (ArrayList<Capataz>) in.readObject();
-                            RegistrarRubro regVent = new RegistrarRubro(sistema);
-                            regVent.setVisible(true);
                         } catch (FileNotFoundException ex) {
                             JOptionPane.showMessageDialog(heroVent, "No se pudo encontrar un archivo para cargar el sistema previo.");
                             RegistrarRubro regVent = new RegistrarRubro(sistema);
