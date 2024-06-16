@@ -32,17 +32,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     /**
-     * Calcula el total presupuestado
-     * 
+     *
      * @param datos
      * @return
      */
-    private int CalcularTotalPresupuestado(String[] datos) {
-        int presupuestoTotal = 0;
-        System.out.println(datos[1]);
-        return presupuestoTotal;
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -190,11 +183,118 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     private void subMenuImportacionDatosObraMousePressed(java.awt.event.MouseEvent evt) {
-        // Código para manejar la importación de datos
+        try {
+            Scanner arch = new Scanner(Paths.get("archivo.txt"));
+            int totalPresupuestado = 0;
+            String[] datosObra = new String[6];
+            ArrayList<Rubro> rubros = new ArrayList();
+            while (arch.hasNext()) {
+                String[] datos = arch.nextLine().split("#");
+                if (datos.length == 6) {
+                    //Carga los datos de la obra al array datosObra
+                    // CI capataz
+                    datosObra[0] = datos[0];
+                    // CI propietario
+                    datosObra[1] = datos[1];
+                    // Direccion
+                    datosObra[2] = datos[2];
+                    // Mes de comienzo
+                    datosObra[3] = datos[3];
+                    // Anio de comienzo
+                    datosObra[4] = datos[4];
+                    //Numero de permiso
+                    datosObra[5] = datos[5];
+                }
+                if (datos.length == 2) {
+                    //Carga los datos de los rubros al arraylist rubros
+                    Rubro nuevoRubro = new Rubro(datos[0], "", parseInt(datos[1]));
+                    rubros.add(nuevoRubro);
+                    totalPresupuestado += parseInt(datos[1]);
+                }
+            }
+            arch.close();
+
+            //Valida que el capataz este en el sistema
+            if (!sistema.validarCapataz(sistema.devolverCapatazPorCedula(datosObra[0]))) {
+                //Valida que el propietario este en el sistema
+                if (!sistema.validarPropietario(sistema.devolverPropietarioPorCedula(datosObra[1]))) {
+                    //Valida que una obra con ese numero de permiso no este ya registrada
+                    if (sistema.validarPermiso(parseInt(datosObra[5]))) {
+
+                        //Crea la obra con los datos nuevos
+                        Obra nuevaObra = new Obra(sistema.devolverPropietarioPorCedula(datosObra[1]), sistema.devolverCapatazPorCedula(datosObra[0]), datosObra[2], parseInt(datosObra[3]), parseInt(datosObra[4]), totalPresupuestado, parseInt(datosObra[5]));
+                        sistema.setObra(nuevaObra);
+
+                        //Agrega los rubros a la obra y los crea si no existen
+                        for (int i = 0; i < rubros.size(); i++) {
+                            if (sistema.devolverRubroPorNombre(rubros.get(i).getNombre()).getNombre().equals(rubros.get(i).getNombre())) {
+                                nuevaObra.setRubrosPresupuestados(sistema.devolverRubroPorNombre(rubros.get(i).getNombre()));
+                            } else {
+                                Rubro nuevoRubro = new Rubro(rubros.get(i).getNombre(), "Descripción a Definir", rubros.get(i).getPresupuesto());
+                                sistema.setRubro(nuevoRubro);
+                                nuevaObra.setRubrosPresupuestados(nuevoRubro);
+                            }
+                        }
+                        JOptionPane.showMessageDialog(this, "Se creo la obra con nro de permiso " + nuevaObra.getNumeroDePermiso());
+                        System.out.println(nuevaObra.toString());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ya existe una obra con ese numero de permiso en el sistema, no se creo la obra.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No hay un propietario con ese numero de cedula registrado en el sistema, no se creo la obra.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay un capataz con ese numero de cedula registrado en el sistema, no se creo la obra.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (IOException e) {
+            System.out.println(e);
+            //Se hace el catch de IndexOutOfBoundsException por si hay un error con el largo de datosObra
+        } catch (IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Verifique que se hayan ingresado todos los datos necesarios en el formato correcto en el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void subMenuExportacionDatosMousePressed(java.awt.event.MouseEvent evt) {
-        // Código para manejar la exportación de datos
+        try {
+            String title = "Determinar ordenamiento";
+            String message = "¿Como se ordenaran los datos?";
+            Object[] options = {"Número de cédula creciente", "Nombre creciente"};
+            int choice = JOptionPane.showOptionDialog(
+                    null,
+                    message,
+                    title,
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]
+            );
+
+            // Procesar la opción seleccionada
+            if (choice == JOptionPane.YES_OPTION) {
+                sistema.getPropietarios().sort((p2, p1) -> Integer.compare(parseInt(p2.getCedula()), parseInt(p1.getCedula())));
+                sistema.getCapataces().sort((p2, p1) -> Integer.compare(parseInt(p2.getCedula()), parseInt(p1.getCedula())));
+            } else if (choice == JOptionPane.NO_OPTION) {
+                sistema.getPropietarios().sort((p1, p2) -> p1.getNombre().toLowerCase().compareTo(p2.getNombre().toLowerCase()));
+                sistema.getCapataces().sort((p1, p2) -> p1.getNombre().toLowerCase().compareTo(p2.getNombre().toLowerCase()));
+            } else {
+                System.out.println("No se eligio opcion.");
+            }
+            Formatter arch = new Formatter("Personas.txt");
+            arch.format("%s%n", "Propietarios");
+            for (int i = 0; i < sistema.getPropietarios().size(); i++) {
+                arch.format("%s%n", "" + sistema.getPropietarios().get(i).getNombre() + " " + sistema.getPropietarios().get(i).getCedula() + " " + sistema.getPropietarios().get(i).getDireccion() + " " + sistema.getPropietarios().get(i).getCelular());
+            }
+            arch.format("%s%n", "");
+            arch.format("%s%n", "Capataces");
+            for (int i = 0; i < sistema.getCapataces().size(); i++) {
+                arch.format("%s%n", "" + sistema.getCapataces().get(i).getNombre() + " " + sistema.getCapataces().get(i).getCedula() + " " + sistema.getCapataces().get(i).getDireccion());
+            }
+            arch.close();
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+        }
     }
 
     private void subMenuRegistrarCapatazMousePressed(java.awt.event.MouseEvent evt) {

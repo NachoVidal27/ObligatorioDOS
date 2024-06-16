@@ -1,6 +1,7 @@
 123#123#Rivera 2312#06#2025#342
 4
 Carp#5000
-Carp#5000
-Carp#5000
-Carp#5000
+Madera#5000
+Electronica#2000
+Ferreteria#3000
+
