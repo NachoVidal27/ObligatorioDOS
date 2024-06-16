@@ -1,15 +1,22 @@
 package obligatoriodos;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import static java.lang.Integer.parseInt;
-import java.nio.file.Paths;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import modelos.*;
 
-public class Sistema {
+public class Sistema implements Serializable {
 
     private ArrayList<Propietario> propietarios = new ArrayList<>();
     private ArrayList<Rubro> rubros = new ArrayList<>();
@@ -20,7 +27,7 @@ public class Sistema {
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
         //Crea rubros
-        cargarRubros(sistema);
+        // cargarRubros(sistema);
         //Termina de crear rubros
         //--
         //iniciamos abriendo una ventana con el hero y configurando un time out para que se cierre en 3 segundos
@@ -36,13 +43,64 @@ public class Sistema {
             if (pedirOpcionVent.haySeleccion) {
                 System.out.println("hay seleccion");
                 pedirOpcionVent.setVisible(false);
+                String opcion = sistema.getModo();
+                switch (opcion) {
+                    case "soloRubros":
+                        System.out.println("elegiste soloRubros");
+                        cargarRubros(sistema);
+                        break;
+                    case "sistemaAnterior":
+                        System.out.println("elegiste sistemaAnterior");
+                        try {
+                            ObjectInputStream in = new ObjectInputStream(new FileInputStream("SistemaPrevio"));
+                            sistema.propietarios = (ArrayList<Propietario>) in.readObject();
+                            sistema.rubros = (ArrayList<Rubro>) in.readObject();
+                            sistema.obras = (ArrayList<Obra>) in.readObject();
+                            sistema.capataces = (ArrayList<Capataz>) in.readObject();
+                            RegistrarRubro regVent = new RegistrarRubro(sistema);
+                            regVent.setVisible(true);
+                        } catch (FileNotFoundException ex) {
+                            JOptionPane.showMessageDialog(heroVent, "No se pudo encontrar un archivo para cargar el sistema previo.");
+                            RegistrarRubro regVent = new RegistrarRubro(sistema);
+                            regVent.setVisible(true);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                    default:
+                        System.out.println("elegiste sistema vacio por descarte");
+                        break;
+                }
+
                 MenuPrincipal menuPrincipalVent = new MenuPrincipal(sistema);
                 menuPrincipalVent.setVisible(true);
-
             }
         });
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                try {
+                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("SistemaPrevio"));
+                    out.writeObject(sistema.propietarios);
+                    out.writeObject(sistema.rubros);
+                    out.writeObject(sistema.obras);
+                    out.writeObject(sistema.capataces);
+                    out.close();
+                } catch (NotSerializableException e) {
+                    System.out.println(e);
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
+            }
+        }, "Shutdown thread"));
+
     }
-    
+
+    private String getModo() {
+        return this.modo;
+    }
+
     private void abrirRegistrarCapataz(Sistema sistema) {
         new RegistrarCapataz(sistema).setVisible(true);
     }
@@ -215,10 +273,5 @@ public class Sistema {
         }
         return rubro;
     }
-    
-    
-    
-    
- 
 
 }

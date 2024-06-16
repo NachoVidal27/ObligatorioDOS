@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package modelos;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 
@@ -10,8 +11,8 @@ import java.util.ArrayList;
  *
  * @author igjov
  */
-public class Obra {
-
+public class Obra implements Serializable{
+    private static final long serialVersionUID = 1L;
     private Propietario propietario;
     private Capataz capataz;
     private String direccion;

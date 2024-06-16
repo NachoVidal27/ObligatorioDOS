@@ -1,7 +1,10 @@
 package modelos;
 
-public class Capataz {
+import java.io.Serializable;
 
+public class Capataz implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private String nombre;
     private String cedula;
     private String direccion;

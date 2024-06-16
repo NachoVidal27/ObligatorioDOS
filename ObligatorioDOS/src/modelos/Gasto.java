@@ -4,8 +4,11 @@
  */
 package modelos;
 
-public class Gasto {
+import java.io.Serializable;
 
+public class Gasto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private int monto;
     private int mes;
     private int anio;

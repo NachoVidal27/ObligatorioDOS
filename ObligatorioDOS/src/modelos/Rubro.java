@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author igjov
  */
 public class Rubro implements Serializable{
-
+    
+    private static final long serialVersionUID = 1L;
     private String nombre; // unique
     private String descripcion;
     private int presupuesto; //indica el presupuesto alocado a los gastos de este rubro

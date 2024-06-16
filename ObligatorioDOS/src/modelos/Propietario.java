@@ -3,12 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package modelos;
+import java.io.Serializable;
 
 /**
  *
  * @author igjov
  */
-public class Propietario {
+public class Propietario implements Serializable {
+    private static final long serialVersionUID = 1L;
   private String nombre;
   private String cedula; 
   private String direccion;

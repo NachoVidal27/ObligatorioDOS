@@ -272,27 +272,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
   //  registrarCapatazVent.setVisible(true);
     }//GEN-LAST:event_subMenuRegistrarCapatazMousePressed
 
-public void subMenuRegistrarCapatazActionPerformed(java.awt.event.ActionEvent evt) {
-        // Crear una nueva ventana si la ventana no existe o ha sido cerrada
-        if (registrarCapatazVent == null || !registrarCapatazVent.isVisible()) {
-            registrarCapatazVent = new RegistrarCapataz(sistema);
-            registrarCapatazVent.setVisible(true);
-            registrarCapatazVent.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-            // Añadir un listener para establecer la referencia a null cuando la ventana se cierre
-            registrarCapatazVent.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-                    registrarCapatazVent = null;
-                }
-            });
-
-            registrarCapatazVent.requestFocus();
-        } else {
-            registrarCapatazVent.toFront();
-            registrarCapatazVent.requestFocus();
-        }
-    }
+ public void subMenuRegistrarCapatazActionPerformed(java.awt.event.ActionEvent evt) {
+    // Implement your action here
+    // For example, you can instantiate and display the RegistrarCapataz window
+ 
+        registrarCapatazVent = new RegistrarCapataz(sistema);
+        registrarCapatazVent.setVisible(true);
+        registrarCapatazVent.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        registrarCapatazVent.requestFocus();
+ 
+}
 
     /**
      * @param args the command line arguments
