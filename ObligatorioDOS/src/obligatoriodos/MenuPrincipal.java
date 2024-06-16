@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Scanner;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import modelos.Obra;
 import modelos.Rubro;
@@ -21,6 +22,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      * Creates new form MenuPrincipal
      */
     private Sistema sistema;
+    private RegistrarCapataz registrarCapatazVent;
 
     public MenuPrincipal(Sistema sistema) {
         this.sistema = sistema;
@@ -266,11 +268,32 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_subMenuExportacionDatosMousePressed
 
     private void subMenuRegistrarCapatazMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subMenuRegistrarCapatazMousePressed
-        RegistrarCapataz registrarCapatazVent = new RegistrarCapataz(this, sistema); // 'this' representa el JFrame actual
-    registrarCapatazVent.setVisible(true);
+//        RegistrarCapataz registrarCapatazVent = new RegistrarCapataz(this, sistema); // 'this' representa el JFrame actual
+  //  registrarCapatazVent.setVisible(true);
     }//GEN-LAST:event_subMenuRegistrarCapatazMousePressed
 
- 
+public void subMenuRegistrarCapatazActionPerformed(java.awt.event.ActionEvent evt) {
+        // Crear una nueva ventana si la ventana no existe o ha sido cerrada
+        if (registrarCapatazVent == null || !registrarCapatazVent.isVisible()) {
+            registrarCapatazVent = new RegistrarCapataz(sistema);
+            registrarCapatazVent.setVisible(true);
+            registrarCapatazVent.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            // Añadir un listener para establecer la referencia a null cuando la ventana se cierre
+            registrarCapatazVent.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                    registrarCapatazVent = null;
+                }
+            });
+
+            registrarCapatazVent.requestFocus();
+        } else {
+            registrarCapatazVent.toFront();
+            registrarCapatazVent.requestFocus();
+        }
+    }
+
     /**
      * @param args the command line arguments
      */

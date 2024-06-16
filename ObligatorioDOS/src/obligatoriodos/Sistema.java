@@ -36,13 +36,15 @@ public class Sistema {
             if (pedirOpcionVent.haySeleccion) {
                 System.out.println("hay seleccion");
                 pedirOpcionVent.setVisible(false);
-                RegistrarCapataz regCa = new RegistrarCapataz(sistema);
-                regCa.setVisible(true);
-                //MenuPrincipal menuPrincipalVent = new MenuPrincipal(sistema);
-                //menuPrincipalVent.setVisible(true);
+                MenuPrincipal menuPrincipalVent = new MenuPrincipal(sistema);
+                menuPrincipalVent.setVisible(true);
 
             }
         });
+    }
+    
+    private void abrirRegistrarCapataz(Sistema sistema) {
+        new RegistrarCapataz(sistema).setVisible(true);
     }
 
     public static void cargarRubros(Sistema sistema) {
