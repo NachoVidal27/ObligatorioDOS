@@ -59,13 +59,12 @@ public class Sistema implements Serializable {
                             sistema.capataces = (ArrayList<Capataz>) in.readObject();
                         } catch (FileNotFoundException ex) {
                             JOptionPane.showMessageDialog(heroVent, "No se pudo encontrar un archivo para cargar el sistema previo.");
-                            RegistrarRubro regVent = new RegistrarRubro(sistema);
-                            regVent.setVisible(true);
                         } catch (IOException ex) {
                             Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (ClassNotFoundException ex) {
                             Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                       
                         break;
                     default:
                         System.out.println("elegiste sistema vacio por descarte");
